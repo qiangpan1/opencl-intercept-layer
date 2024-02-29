@@ -3788,10 +3788,20 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
                     &return_size);
 
                 CHECK_ERROR(retVal);
+                size_t buffer_size;
+                retVal = pIntercept->dispatch().clGetMemObjectInfo(
+                    dst_buffer,
+                    CL_MEM_SIZE,
+                    sizeof(size_t),
+                    &buffer_size,
+                    NULL);
+                CHECK_ERROR(retVal);
+
 
                 if ((flags & CL_MEM_FORCE_HOST_MEMORY_INTEL) &&
                     (flags & CL_MEM_ALLOC_HOST_PTR) &&
-                    (flags & CL_MEM_READ_WRITE)) {
+                    (flags & CL_MEM_READ_WRITE) &&
+                    buffer_size == 3112448) {
                     // The dst_buffer has all three flags.
                     Sleep(3);
                 }
