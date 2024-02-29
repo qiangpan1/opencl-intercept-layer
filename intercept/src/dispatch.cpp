@@ -3777,6 +3777,25 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
                     num_events_in_wait_list,
                     event_wait_list,
                     event );
+
+                cl_mem_flags flags;
+                size_t return_size;
+                retVal = pIntercept->dispatch().clGetMemObjectInfo(
+                    dst_buffer,
+                    CL_MEM_FLAGS,
+                    sizeof(cl_mem_flags),
+                    &flags,
+                    &return_size);
+
+                CHECK_ERROR(retVal);
+
+                if ((flags & CL_MEM_FORCE_HOST_MEMORY_INTEL) &&
+                    (flags & CL_MEM_ALLOC_HOST_PTR) &&
+                    (flags & CL_MEM_READ_WRITE)) {
+                    // The dst_buffer has all three flags.
+                    Sleep(3);
+                }
+
             }
 
             HOST_PERFORMANCE_TIMING_END_WITH_TAG();
