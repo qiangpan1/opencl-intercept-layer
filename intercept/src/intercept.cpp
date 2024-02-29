@@ -17,6 +17,7 @@
 #include "demangle.h"
 #include "emulate.h"
 #include "intercept.h"
+#include <fstream>
 
 /*****************************************************************************\
 
@@ -3364,12 +3365,16 @@ void CLIntercept::logKernelInfo(
 
         // Log the preferred work group size multiple for each kernel,
         // for each device.
+        std::ofstream file;
+        file.open("C:\\Intel\\CLIntercept_Dump\\log.txt", std::ios::app);
+
         while( numDevices && numKernels-- )
         {
             cl_kernel   kernel = kernels[ numKernels ];
 
             const std::string& kernelName = getShortKernelNameWithHash(kernel);
             log( "Kernel Info for: " + kernelName + "\n" );
+            file << "create kernel:" + kernelName << std::endl;
 
             for( cl_uint i = 0; i < numDevices; i++ )
             {
@@ -3488,6 +3493,7 @@ void CLIntercept::logKernelInfo(
                 delete [] deviceName;
             }
         }
+        file.close();
 
         delete [] deviceList;
     }

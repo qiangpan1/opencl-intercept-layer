@@ -7,6 +7,8 @@
 #include <string>
 
 #include "intercept.h"
+#include <fstream>
+#include <regex>
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -4782,7 +4784,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             global_work_size,
             local_work_size,
             command_queue );
-
+        char kernel_name[1024];
         if( pIntercept->config().NullEnqueue == false )
         {
             if( pIntercept->config().NullLocalWorkSize )
@@ -4833,6 +4835,18 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             ITT_ADD_ARRAY_PARAM_AS_METADATA(work_dim, global_work_size);
             ITT_ADD_ARRAY_PARAM_AS_METADATA(work_dim, local_work_size);
             ITT_ADD_ARRAY_PARAM_AS_METADATA(num_events_in_wait_list, event_wait_list);
+
+            pIntercept->dispatch().clGetKernelInfo(kernel,
+                CL_KERNEL_FUNCTION_NAME,
+                sizeof(kernel_name),
+                kernel_name,
+                nullptr);
+
+            if (pIntercept->config().SleepBeforeKernel == kernel_name &&
+                pIntercept->config().SelectedKernelSleep > 0)
+            {
+                Sleep(pIntercept->config().SelectedKernelSleep);
+            }
 
             if( pIntercept->config().Emulate_cl_intel_unified_shared_memory )
             {
@@ -4885,6 +4899,27 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
         DUMP_IMAGES_AFTER_ENQUEUE( kernel, command_queue );
         FINISH_OR_FLUSH_AFTER_ENQUEUE( command_queue );
         CHECK_AUBCAPTURE_STOP( command_queue );
+
+        std::ofstream file;
+        file.open("C:\\Intel\\CLIntercept_Dump\\log.txt", std::ios::app);
+
+        std::string kernel_name_str(kernel_name);
+        file << kernel_name_str<< std::endl;
+        file.close();
+
+        if (pIntercept->config().SelectedKernel == kernel_name_str) {
+            if (pIntercept->config().SelectedKernelSleep  >0) {
+                Sleep(pIntercept->config().SelectedKernelSleep);
+            }
+            else {
+                cl_int  e = pIntercept->dispatch().clFinish(command_queue);
+            }
+        }
+
+        std::regex pattern(pIntercept->config().SelectedKernelPattern);
+        if (std::regex_match(kernel_name_str, pattern)) {
+            cl_int  e = pIntercept->dispatch().clFinish(command_queue);
+        }
 
         return retVal;
     }
