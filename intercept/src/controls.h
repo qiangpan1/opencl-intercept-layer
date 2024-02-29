@@ -191,6 +191,7 @@ CLI_CONTROL( std::string,   SelectedKernel, "", "selected")
 CLI_CONTROL(std::string, SelectedKernelPattern, "", "selected")
 CLI_CONTROL(cl_uint, SelectedKernelSleep,0, "selected")
 CLI_CONTROL(std::string, SleepBeforeKernel, "", "selected")
+CLI_CONTROL(cl_uint, SleepAfterTargetEnqueueCopy, 0, "selected")
 
 
 CLI_CONTROL_SEPARATOR( Platform and Device Query Overrides: )

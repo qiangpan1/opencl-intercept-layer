@@ -3803,7 +3803,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
                     (flags & CL_MEM_READ_WRITE) &&
                     buffer_size == 3112448) {
                     // The dst_buffer has all three flags.
-                    Sleep(3);
+                    Sleep(pIntercept->config().SleepAfterTargetEnqueueCopy);
                 }
 
             }
