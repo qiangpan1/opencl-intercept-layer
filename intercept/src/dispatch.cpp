@@ -4876,7 +4876,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             {
                 Sleep(pIntercept->config().SelectedKernelSleep);
             }
-
+ 
             if( pIntercept->config().Emulate_cl_intel_unified_shared_memory )
             {
                 pIntercept->setUSMKernelExecInfo(
@@ -4936,13 +4936,18 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
         file << kernel_name_str<< std::endl;
         file.close();
 
-        if (pIntercept->config().SelectedKernel == kernel_name_str) {
-            if (pIntercept->config().SelectedKernelSleep  >0) {
+        if (pIntercept->config().SelectedKernel == kernel_name_str &&
+             pIntercept->config().SelectedKernelSleep > 0) {
                 Sleep(pIntercept->config().SelectedKernelSleep);
-            }
-            else {
-                cl_int  e = pIntercept->dispatch().clFinish(command_queue);
-            }
+        }
+        if (pIntercept->config().SelectedKernel == kernel_name_str &&
+            pIntercept->config().SelectedKernelFinish) {
+            cl_int  e = pIntercept->dispatch().clFinish(command_queue);
+        }
+
+        if (pIntercept->config().SelectedKernel == kernel_name_str &&
+            pIntercept->config().SelectedKernelFlush) {
+                cl_int  e = pIntercept->dispatch().clFlush(command_queue);
         }
 
         std::regex pattern(pIntercept->config().SelectedKernelPattern);
