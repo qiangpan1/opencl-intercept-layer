@@ -194,6 +194,9 @@ CLI_CONTROL(std::string, SleepBeforeKernel, "", "selected")
 CLI_CONTROL(cl_uint, SleepAfterTargetEnqueueCopy, 0, "selected")
 CLI_CONTROL(cl_uint, SelectedKernelFlush, 0, "selected")
 CLI_CONTROL(cl_uint, SelectedKernelFinish, 0, "selected")
+CLI_CONTROL(cl_uint, SelectedKernelBeforeSleep, 0, "selected")
+CLI_CONTROL(cl_uint, EnqueueMapWait, 0, "selected")
+
 
 
 CLI_CONTROL_SEPARATOR( Platform and Device Query Overrides: )

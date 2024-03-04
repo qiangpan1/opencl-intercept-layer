@@ -4460,6 +4460,10 @@ CL_API_ENTRY void* CL_API_CALL CLIRN(clEnqueueMapBuffer)(
 
             ITT_ADD_PARAM_AS_METADATA( blocking_map );
 
+            if (pIntercept->config().EnqueueMapWait>0 &&
+                cb == 3112448) {
+                Sleep(pIntercept->config().EnqueueMapWait);
+            }
             retVal = pIntercept->dispatch().clEnqueueMapBuffer(
                 command_queue,
                 buffer,
@@ -4872,9 +4876,9 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
                 nullptr);
 
             if (pIntercept->config().SleepBeforeKernel == kernel_name &&
-                pIntercept->config().SelectedKernelSleep > 0)
+                pIntercept->config().SelectedKernelBeforeSleep > 0)
             {
-                Sleep(pIntercept->config().SelectedKernelSleep);
+                Sleep(pIntercept->config().SelectedKernelBeforeSleep);
             }
  
             if( pIntercept->config().Emulate_cl_intel_unified_shared_memory )
