@@ -17,6 +17,8 @@
 #include <set>
 #include <sstream>
 #include <unordered_map>
+#include <stack>
+#include <queue>
 
 #include <stdint.h>
 
@@ -46,6 +48,8 @@
 
 #include "OS/OS.h"
 
+enum EventType { ORIGIN, INTERCEPT };
+
 class CLIntercept
 {
     struct SConfig;
@@ -59,6 +63,11 @@ public:
 
     static bool Create( void* pGlobalData, CLIntercept*& pIntercept );
     static void Delete( CLIntercept*& pIntercept );
+
+    static std::mutex mtx_stack;  // Mutex for stack
+    static std::mutex mtx_queue;  // Mutex for queue
+    static std::stack < std::pair<EventType,cl_event> > in_use_events;
+    static std::queue <cl_event> available_events;
 
     void    report();
 

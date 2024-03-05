@@ -94,6 +94,7 @@ const char* CLIntercept::sc_LogFileName = "clintercept_log.txt";
 const char* CLIntercept::sc_DumpPerfCountersFileNamePrefix = "clintercept_perfcounter";
 const char* CLIntercept::sc_TraceFileName = "clintercept_trace.json";
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 bool CLIntercept::Create( void* pGlobalData, CLIntercept*& pIntercept )
@@ -112,6 +113,7 @@ bool CLIntercept::Create( void* pGlobalData, CLIntercept*& pIntercept )
 
     return success;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -328,6 +330,12 @@ static std::string GetNonDefaultString(
     ss << "Control " << name << " is set to non-default value: " << value << "\n";
     return ss.str();
 }
+std::queue <cl_event> CLIntercept::available_events;
+std::stack < std::pair<EventType, cl_event> > CLIntercept::in_use_events;
+std::mutex CLIntercept::mtx_queue;
+std::mutex CLIntercept::mtx_stack;
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //

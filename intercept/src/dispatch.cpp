@@ -3752,6 +3752,25 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
             DEVICE_PERFORMANCE_TIMING_START( event );
             HOST_PERFORMANCE_TIMING_START();
 
+            cl_mem_flags flags;
+            size_t return_size;
+            retVal = pIntercept->dispatch().clGetMemObjectInfo(
+                dst_buffer,
+                CL_MEM_FLAGS,
+                sizeof(cl_mem_flags),
+                &flags,
+                &return_size);
+
+            CHECK_ERROR(retVal);
+            size_t buffer_size;
+            retVal = pIntercept->dispatch().clGetMemObjectInfo(
+                dst_buffer,
+                CL_MEM_SIZE,
+                sizeof(size_t),
+                &buffer_size,
+                NULL);
+            CHECK_ERROR(retVal);
+
             if( pIntercept->config().OverrideCopyBuffer )
             {
                 retVal = pIntercept->CopyBuffer(
@@ -3767,57 +3786,74 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
             }
             else
             {
-                retVal = pIntercept->dispatch().clEnqueueCopyBuffer(
-                    command_queue,
-                    src_buffer,
-                    dst_buffer,
-                    src_offset,
-                    dst_offset,
-                    cb,
-                    num_events_in_wait_list,
-                    event_wait_list,
-                    event );
+				cl_uint fake_num_events_in_wait_list = num_events_in_wait_list;
 
-                cl_mem_flags flags;
-                size_t return_size;
-                retVal = pIntercept->dispatch().clGetMemObjectInfo(
-                    dst_buffer,
-                    CL_MEM_FLAGS,
-                    sizeof(cl_mem_flags),
-                    &flags,
-                    &return_size);
+				if (pIntercept->config().ForceSyncKernelAndCopyBuffer > 0 &&
+					(flags & CL_MEM_FORCE_HOST_MEMORY_INTEL) &&
+					(flags & CL_MEM_ALLOC_HOST_PTR) &&
+					(flags & CL_MEM_READ_WRITE) &&
+					buffer_size == 3112448) {
+					std::pair<EventType, cl_event> top_event = pIntercept->in_use_events.top();
+					fake_num_events_in_wait_list = fake_num_events_in_wait_list + 1;
+					cl_event* fake_event_wait_list = new cl_event[fake_num_events_in_wait_list];
+					for (cl_uint i = 0; i < num_events_in_wait_list; i++) {
+						fake_event_wait_list[i] = event_wait_list[i];
+					}
+					fake_event_wait_list[num_events_in_wait_list] = top_event.second;
 
-                CHECK_ERROR(retVal);
-                size_t buffer_size;
-                retVal = pIntercept->dispatch().clGetMemObjectInfo(
-                    dst_buffer,
-                    CL_MEM_SIZE,
-                    sizeof(size_t),
-                    &buffer_size,
-                    NULL);
-                CHECK_ERROR(retVal);
+					retVal = pIntercept->dispatch().clEnqueueCopyBuffer(
+						command_queue,
+						src_buffer,
+						dst_buffer,
+						src_offset,
+						dst_offset,
+						cb,
+						fake_num_events_in_wait_list,
+						fake_event_wait_list,
+						event);
+					delete[] fake_event_wait_list;
+                    {
+                        std::lock_guard<std::mutex> lock_queue(CLIntercept::mtx_queue);
+                        std::lock_guard<std::mutex> lock_stack(CLIntercept::mtx_stack);
 
+                        pIntercept->in_use_events.pop();
+                        if (top_event.first == INTERCEPT)
+                            pIntercept->available_events.push(top_event.second);
+                    }
+				}
+				else {
+					retVal = pIntercept->dispatch().clEnqueueCopyBuffer(
+						command_queue,
+						src_buffer,
+						dst_buffer,
+						src_offset,
+						dst_offset,
+						cb,
+						num_events_in_wait_list,
+						event_wait_list,
+						event);
+				}
 
-                if ((flags & CL_MEM_FORCE_HOST_MEMORY_INTEL) &&
-                    (flags & CL_MEM_ALLOC_HOST_PTR) &&
-                    (flags & CL_MEM_READ_WRITE) &&
-                    buffer_size == 3112448) {
-                    // The dst_buffer has all three flags.
-                    Sleep(pIntercept->config().SleepAfterTargetEnqueueCopy);
-                }
+				if ((flags & CL_MEM_FORCE_HOST_MEMORY_INTEL) &&
+					(flags & CL_MEM_ALLOC_HOST_PTR) &&
+					(flags & CL_MEM_READ_WRITE) &&
+					buffer_size == 3112448) {
+					// The dst_buffer has all three flags.
+					Sleep(pIntercept->config().SleepAfterTargetEnqueueCopy);
+				}
 
-            }
+			}
 
-            HOST_PERFORMANCE_TIMING_END_WITH_TAG();
-            DEVICE_PERFORMANCE_TIMING_END_WITH_TAG( command_queue, event );
-            CHECK_ERROR( retVal );
-            ADD_OBJECT_ALLOCATION( event ? event[0] : NULL );
-            CALL_LOGGING_EXIT_EVENT_WITH_TAG( retVal, event );
-            ADD_EVENT( event ? event[0] : NULL );
-        }
+			HOST_PERFORMANCE_TIMING_END_WITH_TAG();
+			DEVICE_PERFORMANCE_TIMING_END_WITH_TAG(command_queue, event);
+			CHECK_ERROR(retVal);
+			ADD_OBJECT_ALLOCATION(event ? event[0] : NULL);
+			CALL_LOGGING_EXIT_EVENT_WITH_TAG(retVal, event);
+			ADD_EVENT(event ? event[0] : NULL);
+		}
 
-        FINISH_OR_FLUSH_AFTER_ENQUEUE( command_queue );
-        CHECK_AUBCAPTURE_STOP( command_queue );
+		FINISH_OR_FLUSH_AFTER_ENQUEUE(command_queue);
+		CHECK_AUBCAPTURE_STOP(command_queue);
 
         return retVal;
     }
@@ -4908,16 +4944,84 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
 
             if( retVal != CL_SUCCESS )
             {
-                retVal = pIntercept->dispatch().clEnqueueNDRangeKernel(
-                    command_queue,
-                    kernel,
-                    work_dim,
-                    global_work_offset,
-                    global_work_size,
-                    local_work_size,
-                    num_events_in_wait_list,
-                    event_wait_list,
-                    event );
+                if (pIntercept->config().ForceSyncKernelAndCopyBuffer > 0 &&
+                    kernel_name=="PixelFormatConvert_BGRA_4444_32f_To_YUV_420_MPEG4_FRAME_PICTURE_BIPLANAR_8u_709_Kernel") {
+                    cl_context context;
+                    retVal= clGetCommandQueueInfo(command_queue, CL_QUEUE_CONTEXT, sizeof(cl_context), &context, NULL);
+                    CHECK_ERROR(retVal);
+                    if (pIntercept->available_events.size() < 50) {
+                        for (std::size_t i = 10 - pIntercept->available_events.size(); i < 10; ++i) {
+                            cl_event tmpevent = clCreateUserEvent(context, &retVal);
+                            CHECK_ERROR(retVal);
+                            {
+                                std::lock_guard<std::mutex> lock(CLIntercept::mtx_queue);
+                                CLIntercept::available_events.push(tmpevent);
+                            }
+                        }
+                    }
+
+                    if (event != NULL) {
+                        {
+                            std::lock_guard<std::mutex> lock(CLIntercept::mtx_stack);
+                            CLIntercept::in_use_events.push(std::make_pair(EventType::ORIGIN, event[0]));
+                        }
+                        
+                    //typedef CL_API_ENTRY cl_event(CL_API_CALL* cl_api_clCreateUserEvent)(
+                    //    cl_context /* context */,
+                    //    cl_int* /* errcode_ret */) CL_API_SUFFIX__VERSION_1_1;
+                    }
+                    else {
+                        {
+                            std::lock_guard<std::mutex> lock_stack(CLIntercept::mtx_stack);
+                            std::lock_guard<std::mutex> lock_queue(CLIntercept::mtx_queue);
+                            cl_event tmpevent = CLIntercept::available_events.front();//pop from front 
+                            CLIntercept::available_events.pop();
+                            CLIntercept::in_use_events.push(std::make_pair(EventType::INTERCEPT, tmpevent));
+                        }
+                        
+                    }
+                    std::pair<EventType, cl_event>& topPair = CLIntercept::in_use_events.top();
+                    if (topPair.first == INTERCEPT) {
+                        cl_event* wrapper_event = &topPair.second;
+                        retVal = pIntercept->dispatch().clEnqueueNDRangeKernel(
+                            command_queue,
+                            kernel,
+                            work_dim,
+                            global_work_offset,
+                            global_work_size,
+                            local_work_size,
+                            num_events_in_wait_list,
+                            event_wait_list,
+                            wrapper_event);
+                        CHECK_ERROR(retVal);
+
+                    }
+                    else {
+                        retVal = pIntercept->dispatch().clEnqueueNDRangeKernel(
+                            command_queue,
+                            kernel,
+                            work_dim,
+                            global_work_offset,
+                            global_work_size,
+                            local_work_size,
+                            num_events_in_wait_list,
+                            event_wait_list,
+                            event);
+                    }
+                }
+                else {
+                    //original
+                    retVal = pIntercept->dispatch().clEnqueueNDRangeKernel(
+                        command_queue,
+                        kernel,
+                        work_dim,
+                        global_work_offset,
+                        global_work_size,
+                        local_work_size,
+                        num_events_in_wait_list,
+                        event_wait_list,
+                        event);
+                }   
             }
 
             HOST_PERFORMANCE_TIMING_END_WITH_TAG();
@@ -4938,7 +5042,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
 
         std::string kernel_name_str(kernel_name);
         file << kernel_name_str<< std::endl;
-        file.close();
+        
 
         if (pIntercept->config().SelectedKernel == kernel_name_str &&
              pIntercept->config().SelectedKernelSleep > 0) {
@@ -4958,6 +5062,18 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
         if (std::regex_match(kernel_name_str, pattern)) {
             cl_int  e = pIntercept->dispatch().clFinish(command_queue);
         }
+        if (pIntercept->config().SelectedKernel == kernel_name_str &&
+            pIntercept->config().SelectedKernelEvent 
+            ) {
+            if (event) {
+                file << "event address:" << &event<< kernel_name_str << std::endl;
+            }
+            else {
+                file << "event empty in calling :" << kernel_name_str << std::endl;
+            }
+            
+        }
+        file.close();
 
         return retVal;
     }
