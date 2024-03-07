@@ -2777,7 +2777,46 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetKernelArg)(
 
         SET_KERNEL_ARG( kernel, arg_index, arg_size, arg_value );
         HOST_PERFORMANCE_TIMING_START();
+        char kernel_name[1024];
+        pIntercept->dispatch().clGetKernelInfo(kernel,
+            CL_KERNEL_FUNCTION_NAME,
+            sizeof(kernel_name),
+            kernel_name,
+            nullptr);
 
+
+          
+
+        if (pIntercept->config().SelectKernelName == kernel_name &&
+            pIntercept->config().OverrideData!=0) {
+            if ((arg_index == 6 || arg_index == 7|| arg_index == 8) &&
+                arg_size == 8) {
+                cl_int errcode_ret;
+                cl_context context;
+                errcode_ret=pIntercept->dispatch().clGetKernelInfo(kernel, CL_KERNEL_CONTEXT, sizeof(cl_context), &context, NULL);
+                CHECK_ERROR(errcode_ret);
+                cl_mem_flags flags = CL_MEM_READ_WRITE;
+                cl_image_format format;
+                format.image_channel_order = CL_R;
+                format.image_channel_data_type = CL_FLOAT;
+                cl_image_desc desc;
+                desc.image_type = CL_MEM_OBJECT_IMAGE2D;
+                desc.image_width = 1920;
+                desc.image_height = 1080;
+                desc.image_depth = 0;
+                desc.image_array_size = 0;
+                desc.image_row_pitch = 0;
+                desc.image_slice_pitch = 0;
+                desc.num_mip_levels = 0;
+                desc.num_samples = 0;
+                desc.buffer = NULL;
+                void* host_ptr = NULL;
+
+                cl_mem image = pIntercept->dispatch().clCreateImage(context, flags, &format, &desc, host_ptr, &errcode_ret);
+                CHECK_ERROR(errcode_ret);
+                arg_value = &image;
+            }
+        }
         cl_int  retVal = pIntercept->dispatch().clSetKernelArg(
             kernel,
             arg_index,
