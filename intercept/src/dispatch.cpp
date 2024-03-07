@@ -4774,8 +4774,20 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             global_work_offset,
             global_work_size,
             local_work_size );
-        DUMP_BUFFERS_BEFORE_ENQUEUE( kernel, command_queue );
-        DUMP_IMAGES_BEFORE_ENQUEUE( kernel, command_queue );
+        
+        char kernel_name[1024];
+        pIntercept->dispatch().clGetKernelInfo(kernel,
+            CL_KERNEL_FUNCTION_NAME,
+            sizeof(kernel_name),
+            kernel_name,
+            nullptr);
+
+        if (pIntercept->config().SelectKernelName ==kernel_name) {
+            DUMP_BUFFERS_BEFORE_ENQUEUE(kernel, command_queue);
+            DUMP_IMAGES_BEFORE_ENQUEUE(kernel, command_queue);
+        }
+        
+        
         CHECK_AUBCAPTURE_START_KERNEL(
             kernel,
             work_dim,
@@ -4881,8 +4893,12 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             ADD_EVENT( event ? event[0] : NULL );
         }
 
-        DUMP_BUFFERS_AFTER_ENQUEUE( kernel, command_queue );
-        DUMP_IMAGES_AFTER_ENQUEUE( kernel, command_queue );
+        if (pIntercept->config().SelectKernelName == kernel_name){
+            DUMP_BUFFERS_AFTER_ENQUEUE(kernel, command_queue);
+            DUMP_IMAGES_AFTER_ENQUEUE(kernel, command_queue);
+        }
+        
+        
         FINISH_OR_FLUSH_AFTER_ENQUEUE( command_queue );
         CHECK_AUBCAPTURE_STOP( command_queue );
 

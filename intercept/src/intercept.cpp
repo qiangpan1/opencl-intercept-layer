@@ -17,6 +17,7 @@
 #include "demangle.h"
 #include "emulate.h"
 #include "intercept.h"
+#include <fstream>
 
 /*****************************************************************************\
 
