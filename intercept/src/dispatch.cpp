@@ -5226,7 +5226,9 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueMarker)(
             retVal = pIntercept->dispatch().clEnqueueMarker(
                 command_queue,
                 event );
-
+            if (pIntercept->config().ForceFlushAfterMarker != 0) {
+                pIntercept->dispatch().clFlush(command_queue);
+            }
             HOST_PERFORMANCE_TIMING_END();
             DEVICE_PERFORMANCE_TIMING_END( command_queue, event );
             CHECK_ERROR( retVal );

@@ -198,6 +198,7 @@ CLI_CONTROL(cl_uint, SelectedKernelBeforeSleep, 0, "selected")
 CLI_CONTROL(cl_uint, EnqueueMapWait, 0, "selected")
 CLI_CONTROL(cl_uint, ForceSyncKernelAndCopyBuffer, 0, "selected")
 CLI_CONTROL(cl_uint, SelectedKernelEvent, 0, "selected")
+CLI_CONTROL(cl_uint, ForceFlushAfterMarker, 0, "selected")
 
 
 
