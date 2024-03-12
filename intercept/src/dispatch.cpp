@@ -2627,7 +2627,8 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
                         void(CL_CALLBACK* pfn_notify)(cl_program program, void* user_data),
                         void* user_data) CL_API_SUFFIX__VERSION_1_0;*/
                     cl_int err;
-                    err = pIntercept->dispatch().clBuildProgram(*(pIntercept->target_program), 0, NULL, NULL, NULL, NULL);
+                    const char* options = " -w -cl-mad-enable -cl-fast-relaxed-math -Dz323df50901b485739bf3a3b9a84c73b0 -Dz19b5d543c053da775a7fdae238b4c483 -Dzc229ce7b384e9cbe83e58608fba7c36d";
+                    err = pIntercept->dispatch().clBuildProgram(*(pIntercept->target_program), 0, NULL, options, NULL, NULL);
                     CHECK_ERROR(err);
                     };
                 

@@ -62,6 +62,7 @@ public:
 
     //---------------START:this only for debug---------------
     cl_program* target_program=NULL;
+
     //---------------END:this only for debug---------------
 
     void    report();
