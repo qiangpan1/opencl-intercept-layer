@@ -7,6 +7,7 @@
 #include <string>
 
 #include "intercept.h"
+#include <Windows.h>
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -2569,11 +2570,24 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
 
         if( retVal == NULL )
         {
+            std::stringbuf buffer;
+            const char* tmpspot= "clCreatekernel:";
+            buffer.sputn(tmpspot, strlen(tmpspot));
+            buffer.sputn(kernel_name,strlen(kernel_name));
+            OutputDebugString(buffer.str().c_str());
+            if (pIntercept->config().OverrideTargetKernel) {
+                OutputDebugString("OverrideTargetKernel");
+            }
+            if(std::string(kernel_name) == "zb12c27c290d4567aff95b49bce4768ee")
+                OutputDebugString("kernel hit");
+            if (pIntercept->config().KernelSourcePath != "")
+                OutputDebugString(pIntercept->config().KernelSourcePath.c_str());
 
             if (pIntercept->config().OverrideTargetKernel &&
-                kernel_name=="zb12c27c290d4567aff95b49bce4768ee" &&
+                std::string(kernel_name) =="zb12c27c290d4567aff95b49bce4768ee" &&
                 pIntercept->config().KernelSourcePath !="") {
 
+                OutputDebugString("Query context of original program\n");
                 //Query context of original program
                 cl_context ctx;
                 cl_int err;
@@ -2585,7 +2599,6 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
                     NULL);
                 CHECK_ERROR(err);
 
-               
                 auto createProgram = [&pIntercept, &ctx, &errcode_ret]() {
                     std::ifstream sourceFile(pIntercept->config().KernelSourcePath);//file: xxx.cl
                     if (!sourceFile.is_open()) {
@@ -2593,6 +2606,7 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
                     }
 
                     //create program handle
+                    OutputDebugString("create program handle\n");
                     pIntercept->target_program = static_cast<cl_program*>(malloc(sizeof(cl_program)));
 
                     // source loading
@@ -2611,6 +2625,7 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
                              const char** strings,
                              const size_t * lengths,
                              cl_int * errcode_ret)*/
+
                     *(pIntercept->target_program) = pIntercept->dispatch().clCreateProgramWithSource(
                         ctx,//context
                         1,//str num
@@ -2618,6 +2633,7 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
                         &source_size,/*lengths argument is an array with the number of chars in each string (the string length). If an element in lengths is zero, its accompanying string is null-terminated. If lengths is NULL, all strings in the strings argument are considered null-terminated. Any length value passed in that is greater than zero excludes the null terminator in its count.*/
                         errcode_ret//errcode_ret
                     );
+                    OutputDebugString("clCreateProgramWithSource\n");
 
                     //build program
                     //https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clBuildProgram.html
@@ -2629,6 +2645,7 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
                     cl_int err;
                     const char* options = " -w -cl-mad-enable -cl-fast-relaxed-math -Dz323df50901b485739bf3a3b9a84c73b0 -Dz19b5d543c053da775a7fdae238b4c483 -Dzc229ce7b384e9cbe83e58608fba7c36d";
                     err = pIntercept->dispatch().clBuildProgram(*(pIntercept->target_program), 0, NULL, options, NULL, NULL);
+                    OutputDebugString("build program\n");
                     CHECK_ERROR(err);
                     };
                 
