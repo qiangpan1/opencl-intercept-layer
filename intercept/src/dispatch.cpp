@@ -2569,10 +2569,86 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
 
         if( retVal == NULL )
         {
-            retVal = pIntercept->dispatch().clCreateKernel(
-                program,
-                kernel_name,
-                errcode_ret );
+
+            if (pIntercept->config().OverrideTargetKernel &&
+                kernel_name=="zb12c27c290d4567aff95b49bce4768ee" &&
+                pIntercept->config().KernelSourcePath !="") {
+
+                //Query context of original program
+                cl_context ctx;
+                cl_int err;
+                err = clGetProgramInfo(
+                    program,
+                    CL_PROGRAM_CONTEXT,
+                    sizeof(cl_context),
+                    &ctx,
+                    NULL);
+                CHECK_ERROR(err);
+
+               
+                auto createProgram = [&pIntercept, &ctx, &errcode_ret]() {
+                    std::ifstream sourceFile(pIntercept->config().KernelSourcePath);//file: xxx.cl
+                    if (!sourceFile.is_open()) {
+                        exit(1);
+                    }
+
+                    //create program handle
+                    pIntercept->target_program = static_cast<cl_program*>(malloc(sizeof(cl_program)));
+
+                    // source loading
+                    std::stringstream buffer;
+                    buffer << sourceFile.rdbuf();
+                    std::string source_str = buffer.str();
+                    const char* source_cstr = source_str.c_str();
+                    size_t source_size = source_str.size();
+
+                    //load source to program
+                    //create specific program to replace
+                    //https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clCreateProgramWithSource.html
+                    /*CL_API_ENTRY cl_program CL_API_CALL CLIRN(clCreateProgramWithSource)(
+                             cl_context context,
+                             cl_uint count,
+                             const char** strings,
+                             const size_t * lengths,
+                             cl_int * errcode_ret)*/
+                    *(pIntercept->target_program) = pIntercept->dispatch().clCreateProgramWithSource(
+                        ctx,//context
+                        1,//str num
+                        &source_cstr,
+                        &source_size,/*lengths argument is an array with the number of chars in each string (the string length). If an element in lengths is zero, its accompanying string is null-terminated. If lengths is NULL, all strings in the strings argument are considered null-terminated. Any length value passed in that is greater than zero excludes the null terminator in its count.*/
+                        errcode_ret//errcode_ret
+                    );
+
+                    //build program
+                    //https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clBuildProgram.html
+                    /*  typedef CL_API_ENTRY cl_int(CL_API_CALL* cl_api_clBuildProgram)(
+                        cl_program program, cl_uint num_devices, const cl_device_id* device_list,
+                        const char* options,
+                        void(CL_CALLBACK* pfn_notify)(cl_program program, void* user_data),
+                        void* user_data) CL_API_SUFFIX__VERSION_1_0;*/
+                    cl_int err;
+                    err = pIntercept->dispatch().clBuildProgram(*(pIntercept->target_program), 0, NULL, NULL, NULL, NULL);
+                    CHECK_ERROR(err);
+                    };
+                
+                if (pIntercept->target_program ==NULL) {
+                    createProgram();
+                }
+
+                retVal = pIntercept->dispatch().clCreateKernel(
+                    *(pIntercept->target_program),
+                    kernel_name,
+                    errcode_ret);
+
+               CHECK_ERROR(errcode_ret[0]);
+            }
+            else {
+                retVal = pIntercept->dispatch().clCreateKernel(
+                    program,
+                    kernel_name,
+                    errcode_ret);
+            }
+           
         }
 
         HOST_PERFORMANCE_TIMING_END();

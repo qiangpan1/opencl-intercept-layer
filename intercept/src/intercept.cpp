@@ -329,6 +329,7 @@ static std::string GetNonDefaultString(
     return ss.str();
 }
 
+
 ///////////////////////////////////////////////////////////////////////////////
 //
 bool CLIntercept::init()

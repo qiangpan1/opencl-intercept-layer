@@ -227,3 +227,5 @@ CLI_CONTROL( bool,          OverrideBuiltinKernels,                 false, "If s
 CLI_CONTROL_SEPARATOR(Customized kernel adding : )
 CLI_CONTROL(std::string, SelectKernelName, "", "")
 CLI_CONTROL(cl_uint, OverrideData, 0, "")
+CLI_CONTROL(cl_uint, OverrideTargetKernel, 0, "")
+CLI_CONTROL(std::string, KernelSourcePath, "", "")
