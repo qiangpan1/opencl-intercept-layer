@@ -4915,9 +4915,24 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             kernel_name,
             nullptr);
 
+        cl_event call_start, call_end;
+        cl_ulong startTime, endTime;
+        cl_context q_ctx;
+        cl_int err;
+        err = clGetCommandQueueInfo(command_queue, CL_QUEUE_CONTEXT, sizeof(q_ctx), &q_ctx, NULL);
+        CHECK_ERROR(err);
+
         if (pIntercept->config().SelectKernelName ==kernel_name) {
             DUMP_BUFFERS_BEFORE_ENQUEUE(kernel, command_queue);
             DUMP_IMAGES_BEFORE_ENQUEUE(kernel, command_queue);
+            if (pIntercept->config().SelectKernelNameTiming) {
+                cl_int err;
+                call_start = clCreateUserEvent(q_ctx, &err);
+                CHECK_ERROR(err);
+                call_end = clCreateUserEvent(q_ctx, &err);
+                CHECK_ERROR(err);
+                clEnqueueMarkerWithWaitList(command_queue, 1, &call_start, NULL);
+            }
         }
         
         
@@ -5029,6 +5044,20 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
         if (pIntercept->config().SelectKernelName == kernel_name){
             DUMP_BUFFERS_AFTER_ENQUEUE(kernel, command_queue);
             DUMP_IMAGES_AFTER_ENQUEUE(kernel, command_queue);
+            if (pIntercept->config().SelectKernelNameTiming) {
+                clEnqueueMarkerWithWaitList(command_queue, 1, &call_end, NULL);
+                clWaitForEvents(1,&call_end);
+                clGetEventProfilingInfo(call_start, CL_PROFILING_COMMAND_START, sizeof(cl_ulong), &startTime, NULL);
+                clGetEventProfilingInfo(call_start, CL_PROFILING_COMMAND_END, sizeof(cl_ulong), &endTime, NULL);
+                cl_ulong elapseTime = endTime - startTime;
+                char outputString[100];
+                snprintf(outputString,sizeof(outputString),"this is kernel time of 68ee:%lu",(unsigned long)elapseTime);
+
+                OutputDebugString(outputString);
+                clReleaseEvent(call_start);
+                clReleaseEvent(call_end);
+
+            }
         }
         
         
