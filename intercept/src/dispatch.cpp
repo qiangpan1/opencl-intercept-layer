@@ -5037,12 +5037,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
         FINISH_OR_FLUSH_AFTER_ENQUEUE( command_queue );
         CHECK_AUBCAPTURE_STOP( command_queue );
 
-        std::ofstream file;
-        file.open("C:\\Intel\\CLIntercept_Dump\\log.txt", std::ios::app);
-
         std::string kernel_name_str(kernel_name);
-        file << kernel_name_str<< std::endl;
-        
 
         if (pIntercept->config().SelectedKernel == kernel_name_str &&
              pIntercept->config().SelectedKernelSleep > 0) {
@@ -5065,16 +5060,16 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
         if (pIntercept->config().SelectedKernel == kernel_name_str &&
             pIntercept->config().SelectedKernelEvent 
             ) {
+            char outputString[100];
             if (event) {
-                file << "event address:" << &event<< kernel_name_str << std::endl;
+                snprintf(outputString,sizeof(outputString),"%s------>event address:%p",(void*)&event, kernel_name_str.c_str());
+                
             }
             else {
-                file << "event empty in calling :" << kernel_name_str << std::endl;
+                snprintf(outputString, sizeof(outputString), "%s------>event empty in calling", kernel_name_str.c_str());
             }
-            
+            OutputDebugString(outputString);
         }
-        file.close();
-
         return retVal;
     }
 
