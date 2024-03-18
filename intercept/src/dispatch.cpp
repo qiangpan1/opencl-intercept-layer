@@ -1,4 +1,4 @@
-/*
+﻿/*
 // Copyright (c) 2018-2024 Intel Corporation
 //
 // SPDX-License-Identifier: MIT
@@ -2545,6 +2545,7 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
     const char* kernel_name,
     cl_int* errcode_ret )
 {
+    API_STICKER_TRACE_ENTER();
     CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateKernel )
@@ -3721,6 +3722,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
+    API_STICKER_TRACE_ENTER();
     CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueCopyBuffer )

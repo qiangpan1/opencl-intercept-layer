@@ -103,6 +103,7 @@ bool CLIntercept::Create( void* pGlobalData, CLIntercept*& pIntercept )
     if( pIntercept )
     {
         success = pIntercept->init();
+        MosTraceEventInit();
         if( success == false )
         {
             Delete( pIntercept );
@@ -116,6 +117,7 @@ bool CLIntercept::Create( void* pGlobalData, CLIntercept*& pIntercept )
 //
 void CLIntercept::Delete( CLIntercept*& pIntercept )
 {
+    MosTraceEventClose();
     delete pIntercept;
     pIntercept = NULL;
 }

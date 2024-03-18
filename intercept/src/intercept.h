@@ -29,6 +29,8 @@
 
 #include "instrumentation.h"
 
+#include "api_sticker.h"
+
 #if defined(USE_MDAPI)
 #include "MetricsDiscoveryHelper.h"
 #endif
