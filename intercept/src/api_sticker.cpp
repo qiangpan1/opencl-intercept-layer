@@ -1,7 +1,12 @@
 #include "api_sticker.h"
 
 
-const GUID g_intelMedia = { 0x4e1c52c9, 0x1d1e, 0x4470, {0xa1, 0x10, 0x25, 0xa9, 0xf3, 0xeb, 0xe1, 0xa5} };
+//const GUID g_intelMedia = { 0x4e1c52c9, 0x1d1e, 0x4470, {0xa1, 0x10, 0x25, 0xa9, 0xf3, 0xeb, 0xe1, 0xa5} };
+const GUID g_intelMedia = { 0xd5a552ac, 0xb8d, 0x4f69, 0xb2, 0x6c, 0xa7, 0xb6, 0xc1, 0x6f, 0x6b, 0x51 };
+
+// {D5A552AC-0B8D-4F69-B26C-A7B6C16F6B51}
+//DEFINE_GUID(g_intelMedia,
+//    0xd5a552ac, 0xb8d, 0x4f69, 0xb2, 0x6c, 0xa7, 0xb6, 0xc1, 0x6f, 0x6b, 0x51);
 
 ETW_TRACE_CONTEXT mediaETWContext = {};
 ETW_TRACE_CONTEXT* g_pMediaETWContext = &mediaETWContext;
@@ -56,7 +61,8 @@ void MosTraceEventClose() {
         g_pMediaETWContext->Handle = (REGHANDLE)0;
     }
 }
-void MosTraceEvent(uint16_t usId,
+void MosTraceEvent(
+    uint16_t usId,
     uint8_t ucType,
     const void* pArg1,
     uint32_t dwSize1,
@@ -226,17 +232,30 @@ const std::map<std::string, uint32_t> APIMap={
     {
         try
         {
-            OutputDebugString(api);
-            //auto data = APIMap.at(api);
+            uint32_t data = APIMap.at(api);
+            char output[100];
+            sprintf_s(output,"%s---->%d",api,data);
+            OutputDebugString(output);
+            //MOS_TraceEventExt(
+            //    TR_KEY_ENCODE_EVENT_API_STICKER,
+            //    MT_EVENT_LEVEL::ALWAYS,
+            //    EVENT_ENCODE_API_STICKER_HEVC,
+            //    EVENT_TYPE_START,
+            //    &data,
+            //    sizeof(data));
 
-            // MOS_TraceEventExt(
-            //     TR_KEY_ENCODE_EVENT_API_STICKER,
-            //     MT_EVENT_LEVEL::ALWAYS,
-            //     EVENT_ENCODE_API_STICKER_AV1_VA,
-            //     EVENT_TYPE_START,
-            //     &data,
-            //     sizeof(data));
-            MT_LOG1(33555459, 1, 4097, 1000);
+            //MT_LOG1(33555459, 1, 4097, 1000);
+            //data = 0;
+
+            MosTraceEvent(
+                130,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
+                1,//EVENT_TYPE_START,
+                &data,
+                sizeof(data),
+                nullptr,
+                0);
+
+
         }
         catch (...)
         {
