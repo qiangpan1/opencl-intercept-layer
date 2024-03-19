@@ -34,7 +34,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetPlatformIDs)(
     cl_platform_id* platforms,
     cl_uint* num_platforms )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetPlatformIDs )
     {
@@ -68,7 +69,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetPlatformInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetPlatformInfo )
     {
@@ -124,7 +126,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetDeviceIDs)(
     cl_device_id* devices,
     cl_uint* num_devices )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetDeviceIDs )
     {
@@ -188,7 +191,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetDeviceInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetDeviceInfo )
     {
@@ -246,7 +250,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clCreateSubDevices)(
     cl_device_id* out_devices,
     cl_uint* num_devices_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateSubDevices )
     {
@@ -318,7 +323,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clCreateSubDevices)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainDevice)(
     cl_device_id device )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clRetainDevice )
     {
@@ -355,7 +361,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainDevice)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseDevice)(
     cl_device_id device )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clReleaseDevice )
     {
@@ -411,7 +418,7 @@ CL_API_ENTRY cl_context CL_API_CALL CLIRN(clCreateContext)(
     void* user_data,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateContext )
     {
@@ -492,7 +499,7 @@ CL_API_ENTRY cl_context CL_API_CALL CLIRN(clCreateContextFromType)(
     void* user_data,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateContextFromType )
     {
@@ -564,7 +571,7 @@ CL_API_ENTRY cl_context CL_API_CALL CLIRN(clCreateContextFromType)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainContext)(
     cl_context context )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clRetainContext )
     {
@@ -600,7 +607,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainContext)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseContext)(
     cl_context context )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clReleaseContext )
     {
@@ -653,7 +660,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetContextInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetContextInfo )
     {
@@ -688,7 +695,7 @@ CL_API_ENTRY cl_int CL_API_CALL clSetContextDestructorCallback(
     void (CL_CALLBACK *pfn_notify)( cl_context, void* ),
     void *user_data )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetContextDestructorCallback )
     {
@@ -719,7 +726,7 @@ CL_API_ENTRY cl_command_queue CL_API_CALL CLIRN(clCreateCommandQueue)(
     cl_command_queue_properties properties,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateCommandQueue )
     {
@@ -807,7 +814,7 @@ CL_API_ENTRY cl_command_queue CL_API_CALL CLIRN(clCreateCommandQueue)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainCommandQueue)(
     cl_command_queue command_queue )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clRetainCommandQueue )
     {
@@ -843,7 +850,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainCommandQueue)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseCommandQueue)(
     cl_command_queue command_queue )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clReleaseCommandQueue )
     {
@@ -882,7 +889,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetCommandQueueInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetCommandQueueInfo )
     {
@@ -918,7 +925,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetCommandQueueProperty)(
     cl_bool enable,
     cl_command_queue_properties* old_properties )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetCommandQueueProperty )
     {
@@ -951,7 +958,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
     void* host_ptr,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateBuffer )
     {
@@ -1005,7 +1012,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBufferWithProperties)(
     void* host_ptr,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateBufferWithProperties )
     {
@@ -1062,7 +1069,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateBufferNV(
     void* host_ptr,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -1115,7 +1122,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateSubBuffer)(
     const void *buffer_create_info,
     cl_int *errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateSubBuffer )
     {
@@ -1167,7 +1174,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateImage)(
     void* host_ptr,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateImage )
     {
@@ -1248,7 +1255,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateImageWithProperties)(
     void* host_ptr,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateImageWithProperties )
     {
@@ -1339,7 +1346,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateImage2D)(
     void* host_ptr,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateImage2D )
     {
@@ -1410,7 +1417,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateImage3D)(
     void* host_ptr,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateImage3D )
     {
@@ -1478,7 +1485,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateImage3D)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainMemObject)(
     cl_mem memobj )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clRetainMemObject )
     {
@@ -1514,7 +1521,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainMemObject)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseMemObject)(
     cl_mem memobj )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clReleaseMemObject )
     {
@@ -1553,7 +1560,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetSupportedImageFormats)(
     cl_image_format* image_formats,
     cl_uint* num_image_formats )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetSupportedImageFormats )
     {
@@ -1593,7 +1600,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetMemObjectInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetMemObjectInfo )
     {
@@ -1630,7 +1637,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetImageInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetImageInfo )
     {
@@ -1666,7 +1673,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetMemObjectDestructorCallback)(
     void (CL_CALLBACK *pfn_notify)( cl_mem, void* ),
     void *user_data )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetMemObjectDestructorCallback )
     {
@@ -1698,7 +1705,7 @@ CL_API_ENTRY cl_sampler CL_API_CALL CLIRN(clCreateSampler)(
     cl_filter_mode filter_mode,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateSampler )
     {
@@ -1749,7 +1756,7 @@ CL_API_ENTRY cl_sampler CL_API_CALL CLIRN(clCreateSampler)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainSampler)(
     cl_sampler sampler )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clRetainSampler )
     {
@@ -1785,7 +1792,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainSampler)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseSampler)(
     cl_sampler sampler )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clReleaseSampler )
     {
@@ -1823,7 +1830,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetSamplerInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetSamplerInfo )
     {
@@ -1859,7 +1866,7 @@ CL_API_ENTRY cl_program CL_API_CALL CLIRN(clCreateProgramWithSource)(
     const size_t* lengths,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateProgramWithSource )
     {
@@ -1936,7 +1943,7 @@ CL_API_ENTRY cl_program CL_API_CALL CLIRN(clCreateProgramWithBinary)(
     cl_int* binary_status,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateProgramWithBinary )
     {
@@ -2002,7 +2009,7 @@ CL_API_ENTRY cl_program CL_API_CALL CLIRN(clCreateProgramWithBuiltInKernels)(
     const char* kernel_names,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateProgramWithBuiltInKernels )
     {
@@ -2049,7 +2056,7 @@ CL_API_ENTRY cl_program CL_API_CALL CLIRN(clCreateProgramWithBuiltInKernels)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainProgram)(
     cl_program program )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clRetainProgram )
     {
@@ -2085,7 +2092,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainProgram)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseProgram)(
     cl_program program )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clReleaseProgram )
     {
@@ -2123,7 +2130,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clBuildProgram)(
     void (CL_CALLBACK *pfn_notify)(cl_program program, void* user_data),
     void* user_data )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clBuildProgram )
     {
@@ -2197,7 +2204,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clCompileProgram)(
     void (CL_CALLBACK *pfn_notify)(cl_program program , void* user_data),
     void* user_data )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCompileProgram )
     {
@@ -2273,7 +2280,7 @@ CL_API_ENTRY cl_program CL_API_CALL CLIRN(clLinkProgram)(
     void* user_data,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clLinkProgram )
     {
@@ -2353,7 +2360,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetProgramReleaseCallback)(
     void (CL_CALLBACK *pfn_notify)(cl_program program, void* user_data),
     void* user_data )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetProgramReleaseCallback )
     {
@@ -2385,7 +2392,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetProgramSpecializationConstant)(
     size_t spec_size,
     const void* spec_value )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetProgramSpecializationConstant )
     {
@@ -2418,7 +2425,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetProgramSpecializationConstant)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clUnloadPlatformCompiler)(
     cl_platform_id platform )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clUnloadPlatformCompiler )
     {
@@ -2443,7 +2450,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clUnloadPlatformCompiler)(
 //
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clUnloadCompiler)( void )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clUnloadCompiler )
     {
@@ -2472,7 +2479,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetProgramInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetProgramInfo )
     {
@@ -2509,7 +2516,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetProgramBuildInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetProgramBuildInfo )
     {
@@ -2545,8 +2552,8 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCreateKernel)(
     const char* kernel_name,
     cl_int* errcode_ret )
 {
-    API_STICKER_TRACE_ENTER();
-    CLIntercept*    pIntercept = GetIntercept();
+    
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateKernel )
     {
@@ -2610,7 +2617,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clCreateKernelsInProgram)(
     cl_kernel* kernels,
     cl_uint* num_kernels_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateKernelsInProgram )
     {
@@ -2682,7 +2689,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clCreateKernelsInProgram)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainKernel)(
     cl_kernel kernel )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clRetainKernel )
     {
@@ -2718,7 +2725,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainKernel)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseKernel)(
     cl_kernel kernel )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clReleaseKernel )
     {
@@ -2755,7 +2762,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetKernelArg)(
     size_t arg_size,
     const void* arg_value )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetKernelArg )
     {
@@ -2804,7 +2811,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetKernelInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetKernelInfo )
     {
@@ -2842,7 +2849,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetKernelArgInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetKernelArgInfo )
     {
@@ -2880,7 +2887,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetKernelWorkGroupInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetKernelWorkGroupInfo )
     {
@@ -2924,7 +2931,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clWaitForEvents)(
     cl_uint num_events,
     const cl_event* event_list )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clWaitForEvents )
     {
@@ -2968,7 +2975,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetEventInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetEventInfo )
     {
@@ -3003,7 +3010,7 @@ CL_API_ENTRY cl_event CL_API_CALL CLIRN(clCreateUserEvent)(
     cl_context context,
     cl_int *errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateUserEvent )
     {
@@ -3033,7 +3040,7 @@ CL_API_ENTRY cl_event CL_API_CALL CLIRN(clCreateUserEvent)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainEvent)(
     cl_event event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clRetainEvent )
     {
@@ -3069,7 +3076,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainEvent)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseEvent)(
     cl_event event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clReleaseEvent )
     {
@@ -3105,7 +3112,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetUserEventStatus)(
     cl_event event,
     cl_int execution_status )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetUserEventStatus )
     {
@@ -3139,7 +3146,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetEventCallback)(
     void (CL_CALLBACK *pfn_notify)( cl_event, cl_int, void * ),
     void *user_data )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetEventCallback )
     {
@@ -3177,7 +3184,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetEventProfilingInfo)(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetEventProfilingInfo )
     {
@@ -3210,7 +3217,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetEventProfilingInfo)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clFlush)(
     cl_command_queue command_queue )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clFlush )
     {
@@ -3236,7 +3243,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clFlush)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clFinish)(
     cl_command_queue command_queue )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clFinish )
     {
@@ -3272,7 +3279,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueReadBuffer)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueReadBuffer )
     {
@@ -3369,7 +3376,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueReadBufferRect)(
     const cl_event *event_wait_list,
     cl_event *event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueReadBufferRect )
     {
@@ -3462,7 +3469,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueWriteBuffer)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueWriteBuffer )
     {
@@ -3559,7 +3566,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueWriteBufferRect)(
     const cl_event *event_wait_list,
     cl_event *event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueWriteBufferRect )
     {
@@ -3653,7 +3660,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueFillBuffer)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueFillBuffer )
     {
@@ -3722,8 +3729,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    API_STICKER_TRACE_ENTER();
-    CLIntercept*    pIntercept = GetIntercept();
+    
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueCopyBuffer )
     {
@@ -3814,7 +3821,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBufferRect)(
     const cl_event *event_wait_list,
     cl_event *event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueCopyBufferRect )
     {
@@ -3902,7 +3909,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueReadImage)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueReadImage )
     {
@@ -4013,7 +4020,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueWriteImage)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueWriteImage )
     {
@@ -4106,7 +4113,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueFillImage)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueFillImage )
     {
@@ -4170,7 +4177,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyImage)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueCopyImage )
     {
@@ -4252,7 +4259,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyImageToBuffer)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueCopyImageToBuffer )
     {
@@ -4318,7 +4325,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBufferToImage)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueCopyBufferToImage )
     {
@@ -4385,7 +4392,7 @@ CL_API_ENTRY void* CL_API_CALL CLIRN(clEnqueueMapBuffer)(
     cl_event* event,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueMapBuffer )
     {
@@ -4493,7 +4500,7 @@ CL_API_ENTRY void* CL_API_CALL CLIRN(clEnqueueMapImage)(
     cl_event* event,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueMapImage )
     {
@@ -4611,7 +4618,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueUnmapMemObject)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueUnmapMemObject )
     {
@@ -4699,7 +4706,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueMigrateMemObjects)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueMigrateMemObjects )
     {
@@ -4763,7 +4770,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueNDRangeKernel )
     {
@@ -4903,7 +4910,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueTask)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueTask )
     {
@@ -4968,7 +4975,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNativeKernel)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueNativeKernel )
     {
@@ -5020,7 +5027,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueMarker)(
     cl_command_queue command_queue,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueMarker )
     {
@@ -5064,7 +5071,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueWaitForEvents)(
     cl_uint num_events,
     const cl_event* event_list )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueWaitForEvents )
     {
@@ -5119,7 +5126,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueWaitForEvents)(
 CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueBarrier)(
     cl_command_queue command_queue )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueBarrier )
     {
@@ -5161,7 +5168,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueMarkerWithWaitList)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueMarkerWithWaitList )
     {
@@ -5214,7 +5221,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueBarrierWithWaitList)(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueBarrierWithWaitList )
     {
@@ -5264,7 +5271,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueBarrierWithWaitList)(
 CL_API_ENTRY void* CL_API_CALL CLIRN(clGetExtensionFunctionAddress)(
     const char* func_name )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetExtensionFunctionAddress )
     {
@@ -5309,7 +5316,7 @@ CL_API_ENTRY void* CL_API_CALL CLIRN(clGetExtensionFunctionAddressForPlatform)(
     cl_platform_id platform,
     const char* func_name )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetExtensionFunctionAddressForPlatform )
     {
@@ -5366,7 +5373,7 @@ CL_API_ENTRY cl_semaphore_khr CL_API_CALL clCreateSemaphoreWithPropertiesKHR(
     const cl_semaphore_properties_khr* properties,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -5424,7 +5431,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueWaitSemaphoresKHR(
     const cl_event *event_wait_list,
     cl_event *event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -5495,7 +5502,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueSignalSemaphoresKHR(
     const cl_event *event_wait_list,
     cl_event *event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -5564,7 +5571,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetSemaphoreInfoKHR(
     void *param_value,
     size_t *param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -5602,7 +5609,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetSemaphoreInfoKHR(
 CL_API_ENTRY cl_int CL_API_CALL clRetainSemaphoreKHR(
     cl_semaphore_khr semaphore )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -5643,7 +5650,7 @@ CL_API_ENTRY cl_int CL_API_CALL clRetainSemaphoreKHR(
 CL_API_ENTRY cl_int CL_API_CALL clReleaseSemaphoreKHR(
     cl_semaphore_khr semaphore)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -5687,7 +5694,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetSemaphoreHandleForTypeKHR(
     void* handle_ptr,
     size_t* handle_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -5739,7 +5746,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateFromGLBuffer)(
     cl_GLuint bufobj,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -5789,7 +5796,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateFromGLTexture)(
     cl_GLuint texture,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -5852,7 +5859,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateFromGLTexture2D)(
     cl_GLuint texture,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -5915,7 +5922,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateFromGLTexture3D)(
     cl_GLuint texture,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -5976,7 +5983,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateFromGLRenderbuffer)(
     cl_GLuint renderbuffer,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -6023,7 +6030,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetGLObjectInfo)(
     cl_gl_object_type* gl_object_type,
     cl_GLuint* gl_object_name)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -6063,7 +6070,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetGLTextureInfo)(
     void* param_value,
     size_t* param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -6106,7 +6113,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueAcquireGLObjects)(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -6173,7 +6180,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueReleaseGLObjects)(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -6240,7 +6247,7 @@ CL_API_ENTRY void* CL_API_CALL CLIRN(clSVMAlloc) (
     size_t size,
     cl_uint alignment)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSVMAlloc )
     {
@@ -6283,7 +6290,7 @@ CL_API_ENTRY void CL_API_CALL CLIRN(clSVMFree) (
     cl_context context,
     void* svm_pointer)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSVMFree )
     {
@@ -6320,7 +6327,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueSVMFree) (
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueSVMFree )
     {
@@ -6384,7 +6391,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueSVMMemcpy) (
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueSVMMemcpy )
     {
@@ -6454,7 +6461,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueSVMMemFill) (
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueSVMMemFill )
     {
@@ -6521,7 +6528,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueSVMMap) (
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueSVMMap )
     {
@@ -6590,7 +6597,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueSVMUnmap) (
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueSVMUnmap )
     {
@@ -6647,7 +6654,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetKernelArgSVMPointer) (
     cl_uint arg_index,
     const void* arg_value)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetKernelArgSVMPointer )
     {
@@ -6685,7 +6692,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetKernelExecInfo) (
     size_t param_value_size,
     const void* param_value)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetKernelExecInfo )
     {
@@ -6736,7 +6743,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreatePipe) (
     const cl_pipe_properties* properties,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreatePipe )
     {
@@ -6779,7 +6786,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetPipeInfo) (
     void* param_value,
     size_t* param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetPipeInfo )
     {
@@ -6816,7 +6823,7 @@ CL_API_ENTRY cl_command_queue CL_API_CALL CLIRN(clCreateCommandQueueWithProperti
     const cl_queue_properties* properties,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateCommandQueueWithProperties )
     {
@@ -6909,7 +6916,7 @@ CL_API_ENTRY cl_command_queue CL_API_CALL clCreateCommandQueueWithPropertiesKHR(
     const cl_queue_properties_khr* properties,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7004,7 +7011,7 @@ CL_API_ENTRY cl_sampler CL_API_CALL CLIRN(clCreateSamplerWithProperties) (
     const cl_sampler_properties* sampler_properties,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateSamplerWithProperties )
     {
@@ -7049,7 +7056,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetDefaultDeviceCommandQueue) (
     cl_device_id device,
     cl_command_queue command_queue )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clSetDefaultDeviceCommandQueue )
     {
@@ -7080,7 +7087,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetDeviceAndHostTimer) (
     cl_ulong* device_timestamp,
     cl_ulong* host_timestamp )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetDeviceAndHostTimer )
     {
@@ -7110,7 +7117,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetHostTimer) (
     cl_device_id device,
     cl_ulong* host_timestamp )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetHostTimer )
     {
@@ -7141,7 +7148,7 @@ CL_API_ENTRY cl_program CL_API_CALL CLIRN(clCreateProgramWithIL) (
     size_t length,
     cl_int *errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCreateProgramWithIL )
     {
@@ -7190,7 +7197,7 @@ CL_API_ENTRY cl_program CL_API_CALL clCreateProgramWithILKHR(
     size_t length,
     cl_int *errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7240,7 +7247,7 @@ CL_API_ENTRY cl_kernel CL_API_CALL CLIRN(clCloneKernel) (
     cl_kernel source_kernel,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clCloneKernel )
     {
@@ -7282,7 +7289,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clGetKernelSubGroupInfo) (
     void* param_value,
     size_t* param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clGetKernelSubGroupInfo )
     {
@@ -7336,7 +7343,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetKernelSubGroupInfoKHR(
     void* param_value,
     size_t* param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7393,7 +7400,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueSVMMigrateMem(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept && pIntercept->dispatch().clEnqueueSVMMigrateMem )
     {
@@ -7456,7 +7463,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueAcquireExternalMemObjectsKHR(
     const cl_event *event_wait_list,
     cl_event *event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7512,7 +7519,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueReleaseExternalMemObjectsKHR(
     const cl_event *event_wait_list,
     cl_event *event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7569,7 +7576,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetGLContextInfoKHR(
     void* param_value,
     size_t* param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     // The cl_khr_gl_sharing APIs and especially clGetGLContextInfoKHR are a
     // special-case: they are extension functions but do not necessarily pass
@@ -7609,7 +7616,7 @@ CL_API_ENTRY cl_event CL_API_CALL clCreateEventFromGLsyncKHR(
     cl_GLsync sync,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7653,7 +7660,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetDeviceIDsFromD3D10KHR(
     cl_device_id* devices,
     cl_uint* num_devices)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7702,7 +7709,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateFromD3D10BufferKHR(
     ID3D10Buffer* resource,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7748,7 +7755,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateFromD3D10Texture2DKHR(
     UINT subresource,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7795,7 +7802,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateFromD3D10Texture3DKHR(
     UINT subresource,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7843,7 +7850,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueAcquireD3D10ObjectsKHR(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7899,7 +7906,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueReleaseD3D10ObjectsKHR(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -7958,7 +7965,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetDeviceIDsFromD3D11KHR(
     cl_device_id* devices,
     cl_uint* num_devices)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8007,7 +8014,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateFromD3D11BufferKHR(
     ID3D11Buffer* resource,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8053,7 +8060,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateFromD3D11Texture2DKHR(
     UINT subresource,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8100,7 +8107,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateFromD3D11Texture3DKHR(
     UINT subresource,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8148,7 +8155,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueAcquireD3D11ObjectsKHR(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8204,7 +8211,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueReleaseD3D11ObjectsKHR(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8264,7 +8271,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetDeviceIDsFromDX9MediaAdapterKHR(
     cl_device_id* devices,
     cl_uint* num_devices)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8316,7 +8323,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateFromDX9MediaSurfaceKHR(
     cl_uint plane,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8365,7 +8372,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueAcquireDX9MediaSurfacesKHR(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8421,7 +8428,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueReleaseDX9MediaSurfacesKHR(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8482,7 +8489,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetDeviceIDsFromDX9INTEL(
     cl_device_id* devices,
     cl_uint* num_devices )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8533,7 +8540,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateFromDX9MediaSurfaceINTEL(
     UINT plane,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8582,7 +8589,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueAcquireDX9ObjectsINTEL(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8638,7 +8645,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueReleaseDX9ObjectsINTEL(
     const cl_event* event_wait_list,
     cl_event* event )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8696,7 +8703,7 @@ CL_API_ENTRY cl_command_queue CL_API_CALL clCreatePerfCountersCommandQueueINTEL(
     cl_uint configuration,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8762,7 +8769,7 @@ CL_API_ENTRY cl_int CL_API_CALL clSetPerformanceConfigurationINTEL(
     cl_uint*        offsets,
     cl_uint*        values )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8801,7 +8808,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetKernelSuggestedLocalWorkSizeKHR(
     const size_t *globalWorkSize,
     size_t *suggestedLocalWorkSize)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8849,7 +8856,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetImageRequirementsInfoEXT(
     void* param_value,
     size_t* param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8943,7 +8950,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetKernelSuggestedLocalWorkSizeINTEL(
     const size_t *globalWorkSize,
     size_t *suggestedLocalWorkSize)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -8987,7 +8994,7 @@ CL_API_ENTRY cl_accelerator_intel CL_API_CALL clCreateAcceleratorINTEL(
     const void* descriptor,
     cl_int* errcode_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9053,7 +9060,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetAcceleratorInfoINTEL(
     void* param_value,
     size_t* param_value_size_ret )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9090,7 +9097,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetAcceleratorInfoINTEL(
 CL_API_ENTRY cl_int CL_API_CALL clRetainAcceleratorINTEL(
     cl_accelerator_intel accelerator )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9130,7 +9137,7 @@ CL_API_ENTRY cl_int CL_API_CALL clRetainAcceleratorINTEL(
 CL_API_ENTRY cl_int CL_API_CALL clReleaseAcceleratorINTEL(
     cl_accelerator_intel accelerator )
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9174,7 +9181,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetDeviceIDsFromVA_APIMediaAdapterINTEL(
     cl_device_id *devices,
     cl_uint *num_devices)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9224,7 +9231,7 @@ CL_API_ENTRY cl_mem CL_API_CALL clCreateFromVA_APIMediaSurfaceINTEL(
     cl_uint plane,
     cl_int *errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9272,7 +9279,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueAcquireVA_APIMediaSurfacesINTEL(
     const cl_event *event_wait_list,
     cl_event *event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9328,7 +9335,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueReleaseVA_APIMediaSurfacesINTEL(
     const cl_event *event_wait_list,
     cl_event *event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9386,7 +9393,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetSupportedGLTextureFormatsINTEL(
     cl_GLenum* gl_formats,
     cl_uint* num_texture_formats)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9433,7 +9440,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetSupportedDX9MediaSurfaceFormatsINTEL(
     D3DFORMAT* dx9_formats,
     cl_uint* num_surface_formats)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9480,7 +9487,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetSupportedD3D10TextureFormatsINTEL(
     DXGI_FORMAT* d3d10_formats,
     cl_uint* num_texture_formats)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9526,7 +9533,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetSupportedD3D11TextureFormatsINTEL(
     DXGI_FORMAT* d3d11_formats,
     cl_uint* num_texture_formats)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9574,7 +9581,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetSupportedVA_APIMediaSurfaceFormatsINTEL(
     VAImageFormat* va_api_formats,
     cl_uint* num_surface_formats)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9620,7 +9627,7 @@ CL_API_ENTRY void* CL_API_CALL clHostMemAllocINTEL(
     cl_uint alignment,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9685,7 +9692,7 @@ CL_API_ENTRY void* CL_API_CALL clDeviceMemAllocINTEL(
     cl_uint alignment,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9761,7 +9768,7 @@ CL_API_ENTRY void* CL_API_CALL clSharedMemAllocINTEL(
     cl_uint alignment,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9833,7 +9840,7 @@ CL_API_ENTRY cl_int CL_API_CALL clMemFreeINTEL(
     cl_context context,
     void* ptr)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9870,7 +9877,7 @@ clMemBlockingFreeINTEL(
     cl_context context,
     void* ptr)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9912,7 +9919,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetMemAllocInfoINTEL(
     void* param_value,
     size_t* param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -9954,7 +9961,7 @@ CL_API_ENTRY cl_int CL_API_CALL clSetKernelArgMemPointerINTEL(
     cl_uint arg_index,
     const void* arg_value)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10000,7 +10007,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueMemsetINTEL(   // Deprecated
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10070,7 +10077,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueMemFillINTEL(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10141,7 +10148,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueMemcpyINTEL(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10214,7 +10221,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueMigrateMemINTEL(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10283,7 +10290,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueMemAdviseINTEL(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10349,7 +10356,7 @@ CL_API_ENTRY cl_command_buffer_khr CL_API_CALL clCreateCommandBufferKHR(
     const cl_command_buffer_properties_khr* properties,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10403,7 +10410,7 @@ CL_API_ENTRY cl_command_buffer_khr CL_API_CALL clCreateCommandBufferKHR(
 CL_API_ENTRY cl_int CL_API_CALL clFinalizeCommandBufferKHR(
     cl_command_buffer_khr command_buffer)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10436,7 +10443,7 @@ CL_API_ENTRY cl_int CL_API_CALL clFinalizeCommandBufferKHR(
 CL_API_ENTRY cl_int CL_API_CALL clRetainCommandBufferKHR(
     cl_command_buffer_khr command_buffer)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10477,7 +10484,7 @@ CL_API_ENTRY cl_int CL_API_CALL clRetainCommandBufferKHR(
 CL_API_ENTRY cl_int CL_API_CALL clReleaseCommandBufferKHR(
     cl_command_buffer_khr command_buffer)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10521,7 +10528,7 @@ CL_API_ENTRY cl_int CL_API_CALL clEnqueueCommandBufferKHR(
     const cl_event* event_wait_list,
     cl_event* event)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10586,7 +10593,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandBarrierWithWaitListKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10637,7 +10644,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandCopyBufferKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10697,7 +10704,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandCopyBufferRectKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10757,7 +10764,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandCopyBufferToImageKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10813,7 +10820,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandCopyImageKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10869,7 +10876,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandCopyImageToBufferKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10925,7 +10932,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandFillBufferKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -10980,7 +10987,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandFillImageKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -11033,7 +11040,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandSVMMemcpyKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -11089,7 +11096,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandSVMMemFillKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -11148,7 +11155,7 @@ CL_API_ENTRY cl_int CL_API_CALL clCommandNDRangeKernelKHR(
     cl_sync_point_khr* sync_point,
     cl_mutable_command_khr* mutable_handle)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -11216,7 +11223,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetCommandBufferInfoKHR(
     void* param_value,
     size_t* param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -11261,7 +11268,7 @@ CL_API_ENTRY cl_command_buffer_khr CL_API_CALL clRemapCommandBufferKHR(
     cl_mutable_command_khr* handles_ret,
     cl_int* errcode_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -11315,7 +11322,7 @@ CL_API_ENTRY cl_int CL_API_CALL clUpdateMutableCommandsKHR(
     cl_command_buffer_khr command_buffer,
     const cl_mutable_base_config_khr* mutable_config)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
@@ -11363,7 +11370,7 @@ CL_API_ENTRY cl_int CL_API_CALL clGetMutableCommandInfoKHR(
     void* param_value,
     size_t* param_value_size_ret)
 {
-    CLIntercept*    pIntercept = GetIntercept();
+    API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
     if( pIntercept )
     {
