@@ -259,6 +259,9 @@ const std::map<std::string, uint32_t> APIMap={
         }
         catch (...)
         {
+            char failure[100];
+            sprintf(failure, "try catch failued->>>>%s", api);
+            OutputDebugString("try catch failued");
             return;
         }
     }
