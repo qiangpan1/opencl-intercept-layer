@@ -2768,6 +2768,9 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetKernelArg)(
     {
         GET_ENQUEUE_COUNTER();
 
+        TraceKernel::Kernel_Param t_param {(uint32_t)arg_index,(uint32_t)arg_size,(uint64_t)arg_value};
+        pIntercept->m_ArgsKernelInfoMap[kernel].emplace_back(t_param);
+
         std::string argsString;
         if( pIntercept->config().CallLogging )
         {
@@ -3735,6 +3738,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
     if( pIntercept && pIntercept->dispatch().clEnqueueCopyBuffer )
     {
         cl_int  retVal = CL_SUCCESS;
+        TraceKernel::TraceCopyBuffer(src_buffer, dst_buffer);
 
         INCREMENT_ENQUEUE_COUNTER();
         CHECK_AUBCAPTURE_START( command_queue );
@@ -4775,6 +4779,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
     if( pIntercept && pIntercept->dispatch().clEnqueueNDRangeKernel )
     {
         cl_int  retVal = CL_SUCCESS;
+
+        TraceKernel::TraceNDRangeKernel(kernel, pIntercept->m_ArgsKernelInfoMap.at(kernel));
 
         INCREMENT_ENQUEUE_COUNTER();
         CHECK_CAPTURE_REPLAY_START_KERNEL(

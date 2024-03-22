@@ -1,4 +1,4 @@
-
+﻿
 //api_stiker.h
 #pragma once
 #ifndef _ETW_TRACE_H
@@ -8,9 +8,10 @@
 #include "stdio.h"
 #include "stdint.h"
 #include <map>
-#include <string>
+#include <vector>
 #include <evntrace.h>
 #include <evntprov.h>
+#include "CL/cl.h"
 
 typedef struct _ETW_TRACE_CONTEXT {
     REGHANDLE Handle;
@@ -66,6 +67,22 @@ namespace APISticker{
 
 }// namespace APISticker
 #define API_STICKER_TRACE_ENTER() APISticker::TraceEnter(__func__)
+
+namespace TraceKernel {
+    struct Kernel_Param {
+        uint32_t index;
+        uint32_t args_size;
+        uint64_t pointer;
+
+        Kernel_Param() : index(-1), args_size(-1), pointer(static_cast<uint64_t>(-1)) {}
+        Kernel_Param(uint32_t arg_index, uint32_t arg_size, uint64_t arg_pointer)
+            : index(arg_index), args_size(arg_size), pointer(arg_pointer) {
+        }
+    };
+
+    void TraceNDRangeKernel(cl_kernel kernel_handle, std::vector<Kernel_Param>& obj);
+    void TraceCopyBuffer(cl_mem bufferSrc, cl_mem bufferDst);
+}
 
 //id could be api name 
 //lvl 

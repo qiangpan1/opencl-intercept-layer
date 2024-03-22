@@ -1430,6 +1430,10 @@ private:
     typedef std::map< cl_kernel, SUSMKernelInfo >   CUSMKernelInfoMap;
     CUSMKernelInfoMap   m_USMKernelInfoMap;
 
+    public:
+    typedef std::map< cl_kernel, std::vector<TraceKernel::Kernel_Param> > ArgsKernelInfoMap;
+    ArgsKernelInfoMap m_ArgsKernelInfoMap;
+
     DISALLOW_COPY_AND_ASSIGN( CLIntercept );
 };
 

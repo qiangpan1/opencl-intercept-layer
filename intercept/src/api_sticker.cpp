@@ -1,5 +1,6 @@
 #include "api_sticker.h"
 
+#include <string>
 
 //const GUID g_intelMedia = { 0x4e1c52c9, 0x1d1e, 0x4470, {0xa1, 0x10, 0x25, 0xa9, 0xf3, 0xeb, 0xe1, 0xa5} };
 const GUID g_intelMedia = { 0xd5a552ac, 0xb8d, 0x4f69, 0xb2, 0x6c, 0xa7, 0xb6, 0xc1, 0x6f, 0x6b, 0x51 };
@@ -10,6 +11,7 @@ const GUID g_intelMedia = { 0xd5a552ac, 0xb8d, 0x4f69, 0xb2, 0x6c, 0xa7, 0xb6, 0
 
 ETW_TRACE_CONTEXT mediaETWContext = {};
 ETW_TRACE_CONTEXT* g_pMediaETWContext = &mediaETWContext;
+
 
 void NTAPI EtwControlCallback(LPCGUID SourceId,
     ULONG ControlCode,
@@ -97,7 +99,42 @@ void MosTraceEvent(
     return;
 }
  
+namespace TraceKernel {
+    struct Event_NDRange {
+        uint64_t kernel_handle = static_cast<uint64_t>(-1);
+        Kernel_Param parameters[16];
+    };
+    struct CopyBufferInfo {
+        uint64_t bufferInput = static_cast<uint64_t>(-1);
+        uint64_t bufferOutput = static_cast<uint64_t>(-1);
+    } ;
+    void TraceNDRangeKernel(cl_kernel kernel_handle,std::vector<Kernel_Param> &obj) {
+        Event_NDRange t_event{};
+        t_event.kernel_handle = (uint64_t)kernel_handle;
+        for (uint8_t i0 = 0; i0 < (obj.size()>16?16: obj.size()); i0++) {
+            t_event.parameters[i0] = obj[i0];
+        }
 
+        MosTraceEvent(
+            131,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
+            1,//EVENT_TYPE_INFO,
+            &t_event,
+            sizeof(t_event),
+            nullptr,
+            0);
+        obj.clear();
+    }
+    void TraceCopyBuffer(cl_mem bufferSrc, cl_mem bufferDst) {
+        CopyBufferInfo t_info{ (uint64_t)bufferSrc ,(uint64_t)bufferDst };
+        MosTraceEvent(
+            132,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
+            1,//EVENT_TYPE_INFO,
+            &t_info,
+            sizeof(t_info),
+            nullptr,
+            0);
+    }
+}
 namespace APISticker{
       #define APIMAP_ELEM(e)            \
     {                             \
@@ -236,16 +273,7 @@ const std::map<std::string, uint32_t> APIMap={
             char output[100];
             sprintf_s(output,"%s---->%d",api,data);
             OutputDebugString(output);
-            //MOS_TraceEventExt(
-            //    TR_KEY_ENCODE_EVENT_API_STICKER,
-            //    MT_EVENT_LEVEL::ALWAYS,
-            //    EVENT_ENCODE_API_STICKER_HEVC,
-            //    EVENT_TYPE_START,
-            //    &data,
-            //    sizeof(data));
 
-            //MT_LOG1(33555459, 1, 4097, 1000);
-            //data = 0;
 
             MosTraceEvent(
                 130,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
