@@ -1,5 +1,6 @@
 #include "api_sticker.h"
 #include <string>
+#include <cinttypes>
 #include <stdexcept>
 
 //const GUID g_intelMedia = { 0x4e1c52c9, 0x1d1e, 0x4470, {0xa1, 0x10, 0x25, 0xa9, 0xf3, 0xeb, 0xe1, 0xa5} };
@@ -153,12 +154,11 @@ namespace TraceKernel {
 
     void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param> &obj ) {
 
-
         uint64_t t_kernel_handle = reinterpret_cast<uint64_t>(kernel_handle);
                  
         uint32_t params_count = obj.size();
         char debugstr[100];
-        sprintf(debugstr, "This Kernel name is: %s Params Count: %d", kernel_name.c_str(), params_count);
+        sprintf(debugstr, "This Kernel name is: %s Params Count: %d Kernel Handle: %" PRIx64, kernel_name.c_str(), params_count, t_kernel_handle);
         OutputDebugString(debugstr);
 
         // UTF-8 to Wide
@@ -175,17 +175,24 @@ namespace TraceKernel {
         std::wstring wideStr =utf8ToWide(kernel_name);
         //const char* output_str = ansiStr.c_str();
 
-        MosTraceEvent4(
+        MosTraceEvent(
             API_OCL_EnqueueNDRangeKernel,
             EVENT_TYPE_START,
             wideStr.c_str(),
             (wideStr.length() + 1) * sizeof(wchar_t),
+            nullptr,
+            0);
+        MosTraceEvent4(
+            API_OCL_EnqueueNDRangeKernel,
+            EVENT_TYPE_INFO,
             &t_kernel_handle,
             sizeof(uint64_t),
             &params_count,
             sizeof(uint32_t),
             obj.data(),
-            obj.size() * sizeof(TraceKernel::Kernel_Param));
+            obj.size() * sizeof(TraceKernel::Kernel_Param),
+            nullptr,
+            0);
         obj.clear();
     }
 
