@@ -1,5 +1,6 @@
 #include "api_sticker.h"
 #include <string>
+#include <stdexcept>
 
 //const GUID g_intelMedia = { 0x4e1c52c9, 0x1d1e, 0x4470, {0xa1, 0x10, 0x25, 0xa9, 0xf3, 0xeb, 0xe1, 0xa5} };
 const GUID g_intelMedia = { 0xd5a552ac, 0xb8d, 0x4f69, 0xb2, 0x6c, 0xa7, 0xb6, 0xc1, 0x6f, 0x6b, 0x51 };
@@ -160,7 +161,29 @@ namespace TraceKernel {
         sprintf(debugstr, "This Kernel name is: %s Params Count: %d", kernel_name.c_str(), params_count);
         OutputDebugString(debugstr);
 
-        const char* output_str = kernel_name.c_str();
+        // UTF-8 to Wide
+        auto utf8ToWide = [](const std::string& str) -> std::wstring {
+            int count = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);
+            if (count == 0) {
+                throw std::runtime_error("Conversion to wide string failed.");
+            }
+            std::vector<wchar_t> buffer(count);
+            MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, buffer.data(), count);
+            return std::wstring(buffer.begin(), buffer.end() - 1); // Remove null terminator
+            };
+        // Wide to ANSI
+        auto wideToAnsi = [](const std::wstring& wstr) -> std::string {
+            int count = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+            if (count == 0) {
+                throw std::runtime_error("Conversion to ANSI string failed.");
+            }
+            std::vector<char> buffer(count);
+            WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, buffer.data(), count, nullptr, nullptr);
+            return std::string(buffer.begin(), buffer.end() - 1); // Remove null terminator
+            };
+        std::string ansiStr=wideToAnsi(utf8ToWide(kernel_name));
+        const char* output_str = ansiStr.c_str();
+
         MosTraceEvent4(
             API_OCL_EnqueueNDRangeKernel,
             EVENT_TYPE_START,
