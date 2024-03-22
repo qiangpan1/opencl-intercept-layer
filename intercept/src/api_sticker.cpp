@@ -1,5 +1,4 @@
 #include "api_sticker.h"
-
 #include <string>
 
 //const GUID g_intelMedia = { 0x4e1c52c9, 0x1d1e, 0x4470, {0xa1, 0x10, 0x25, 0xa9, 0xf3, 0xeb, 0xe1, 0xa5} };
@@ -98,42 +97,100 @@ void MosTraceEvent(
 
     return;
 }
- 
-namespace TraceKernel {
-    struct Event_NDRange {
-        uint64_t kernel_handle = static_cast<uint64_t>(-1);
-        Kernel_Param parameters[16];
-    };
-    struct CopyBufferInfo {
-        uint64_t bufferInput = static_cast<uint64_t>(-1);
-        uint64_t bufferOutput = static_cast<uint64_t>(-1);
-    } ;
-    void TraceNDRangeKernel(cl_kernel kernel_handle,std::vector<Kernel_Param> &obj) {
-        Event_NDRange t_event{};
-        t_event.kernel_handle = (uint64_t)kernel_handle;
-        for (uint8_t i0 = 0; i0 < (obj.size()>16?16: obj.size()); i0++) {
-            t_event.parameters[i0] = obj[i0];
+void MosTraceEvent4(
+    uint16_t usId,
+    uint8_t ucType,
+    const void* pArg1,
+    uint32_t dwSize1,
+    const void* pArg2,
+    uint32_t dwSize2,
+    const void* pArg3, 
+    uint32_t dwSize3,
+    const void* pArg4,
+    uint32_t dwSize4
+    ) {
+    if (g_pMediaETWContext && g_pMediaETWContext->Handle) {
+        EVENT_DATA_DESCRIPTOR EventData[4];
+        EVENT_DESCRIPTOR EventDesc = { 0 };
+        EVENT_DATA_DESCRIPTOR* pEventData = NULL;
+        DWORD dwNum = 0;
+
+        // setup event descriptor & event data
+        EventDesc.Id = (usId << 2) + ucType;
+        EventDesc.Opcode = ucType;
+        EventDesc.Task = usId;
+
+        if (pArg1) {
+            EventDataDescCreate(&EventData[0], pArg1, dwSize1);
+
+            pEventData = EventData;
+            dwNum = 1;
+            if (pArg2) {
+                EventDataDescCreate(&EventData[1], pArg2, dwSize2);
+
+                dwNum++;
+                if (pArg3) {
+                    EventDataDescCreate(&EventData[2], pArg3, dwSize3);
+                    dwNum++;
+                    if (pArg4) {
+                        EventDataDescCreate(&EventData[3], pArg4, dwSize4);
+                        dwNum++;
+                    }
+                }
+            }
+          
         }
 
-        MosTraceEvent(
-            131,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
-            1,//EVENT_TYPE_INFO,
-            &t_event,
-            sizeof(t_event),
-            nullptr,
-            0);
+        auto hr = EventWrite(g_pMediaETWContext->Handle, &EventDesc, dwNum, pEventData);
+    }
+
+    return;
+}
+
+
+namespace TraceKernel {
+
+    void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param> &obj ) {
+
+
+        uint64_t t_kernel_handle = reinterpret_cast<uint64_t>(kernel_handle);
+                 
+        uint32_t params_count = obj.size();
+        char debugstr[100];
+        sprintf(debugstr, "This Kernel name is: %s Params Count: %d", kernel_name.c_str(), params_count);
+        OutputDebugString(debugstr);
+
+        const char* output_str = kernel_name.c_str();
+        MosTraceEvent4(
+            API_OCL_EnqueueNDRangeKernel,
+            EVENT_TYPE_START,
+            output_str,
+            strlen(output_str) + 1,
+            &t_kernel_handle,
+            sizeof(uint64_t),
+            &params_count,
+            sizeof(uint32_t),
+            obj.data(),
+            obj.size() * sizeof(TraceKernel::Kernel_Param));
         obj.clear();
     }
+
     void TraceCopyBuffer(cl_mem bufferSrc, cl_mem bufferDst) {
-        CopyBufferInfo t_info{ (uint64_t)bufferSrc ,(uint64_t)bufferDst };
+
+        struct CopyBufferInfo {
+            uint64_t bufferInput = static_cast<uint64_t>(-1);
+            uint64_t bufferOutput = static_cast<uint64_t>(-1);
+        }t_info{ (uint64_t)bufferSrc ,(uint64_t)bufferDst };
+
         MosTraceEvent(
-            132,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
-            1,//EVENT_TYPE_INFO,
+            API_OCL_EnqueueCopyBuffer,
+            EVENT_TYPE_START,
             &t_info,
             sizeof(t_info),
             nullptr,
             0);
     }
+    
 }
 namespace APISticker{
       #define APIMAP_ELEM(e)            \
@@ -273,17 +330,13 @@ const std::map<std::string, uint32_t> APIMap={
             char output[100];
             sprintf_s(output,"%s---->%d",api,data);
             OutputDebugString(output);
-
-
             MosTraceEvent(
-                130,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
-                1,//EVENT_TYPE_START,
+                API_STICKER_OCL,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
+                EVENT_TYPE_START,//EVENT_TYPE_START,
                 &data,
                 sizeof(data),
                 nullptr,
                 0);
-
-
         }
         catch (...)
         {

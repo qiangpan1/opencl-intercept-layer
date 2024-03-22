@@ -12,6 +12,7 @@
 #include <evntrace.h>
 #include <evntprov.h>
 #include "CL/cl.h"
+#include <string>
 
 typedef struct _ETW_TRACE_CONTEXT {
     REGHANDLE Handle;
@@ -27,6 +28,27 @@ typedef struct _ETW_TRACE_CONTEXT {
     } PlatInfo;
 } ETW_TRACE_CONTEXT, * PETW_TRACE_CONTEXT;
 
+typedef enum _OCL_TASK_ID {
+    API_STICKER_OCL = 130,
+    API_OCL_EnqueueNDRangeKernel,
+    API_OCL_EnqueueCopyBuffer,
+    API_OCL_EnqueueMapBuffer,
+    API_OCL_EnqueueUnmapMemObject,
+    API_OCL_CreateBuffer,
+    API_OCL_EnqueueReadBuffer,
+    API_OCL_EnqueueWriteBuffer,
+    API_OCL_CreateImage,
+    API_OCL_EnqueueWriteImage,
+    API_OCL_EnqueueReadImage,
+    API_OCL_ReleaseMemObject,
+} OCL_TASK_ID;
+
+typedef enum _OCL_EVENT_TYPE{
+    EVENT_TYPE_INFO = 0,           //! function information event
+    EVENT_TYPE_START = 1,           //! function entry event
+    EVENT_TYPE_END = 2,           //! function exit event
+    EVENT_TYPE_INFO2 = 3,           //! function extra information event
+} OCL_EVENT_TYPE;
 
 
 void NTAPI EtwControlCallback(LPCGUID SourceId,
@@ -80,9 +102,14 @@ namespace TraceKernel {
         }
     };
 
-    void TraceNDRangeKernel(cl_kernel kernel_handle, std::vector<Kernel_Param>& obj);
+    void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param>& obj);
     void TraceCopyBuffer(cl_mem bufferSrc, cl_mem bufferDst);
 }
+#define TRACE_KERNEL(kernel) \
+    do{\
+    const std::string kernel_name = pIntercept->getShortKernelName(kernel);\
+    TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel));\
+}while(0)
 
 //id could be api name 
 //lvl 

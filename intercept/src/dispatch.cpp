@@ -4780,8 +4780,6 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
     {
         cl_int  retVal = CL_SUCCESS;
 
-        TraceKernel::TraceNDRangeKernel(kernel, pIntercept->m_ArgsKernelInfoMap.at(kernel));
-
         INCREMENT_ENQUEUE_COUNTER();
         CHECK_CAPTURE_REPLAY_START_KERNEL(
             kernel,
@@ -4797,6 +4795,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             global_work_size,
             local_work_size,
             command_queue );
+
+        TRACE_KERNEL(kernel);
 
         if( pIntercept->config().NullEnqueue == false )
         {

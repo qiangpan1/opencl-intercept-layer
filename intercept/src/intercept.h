@@ -954,7 +954,9 @@ public:
 
     cl_int  finishAll(
                 cl_context conetxt );
-
+public:
+    std::string getShortKernelName(
+        const cl_kernel kernel);
 private:
     static const char* sc_URL;
     static const char* sc_DumpDirectoryName;
@@ -989,8 +991,6 @@ private:
 
     void    addShortKernelName(
                 const std::string& kernelName );
-    std::string getShortKernelName(
-                    const cl_kernel kernel );
     std::string getShortKernelNameWithHash(
                     const cl_kernel kernel );
 
