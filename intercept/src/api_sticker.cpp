@@ -171,24 +171,15 @@ namespace TraceKernel {
             MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, buffer.data(), count);
             return std::wstring(buffer.begin(), buffer.end() - 1); // Remove null terminator
             };
-        // Wide to ANSI
-        auto wideToAnsi = [](const std::wstring& wstr) -> std::string {
-            int count = WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
-            if (count == 0) {
-                throw std::runtime_error("Conversion to ANSI string failed.");
-            }
-            std::vector<char> buffer(count);
-            WideCharToMultiByte(CP_ACP, 0, wstr.c_str(), -1, buffer.data(), count, nullptr, nullptr);
-            return std::string(buffer.begin(), buffer.end() - 1); // Remove null terminator
-            };
-        std::string ansiStr=wideToAnsi(utf8ToWide(kernel_name));
-        const char* output_str = ansiStr.c_str();
+       
+        std::wstring wideStr =utf8ToWide(kernel_name);
+        //const char* output_str = ansiStr.c_str();
 
         MosTraceEvent4(
             API_OCL_EnqueueNDRangeKernel,
             EVENT_TYPE_START,
-            output_str,
-            strlen(output_str) + 1,
+            wideStr.c_str(),
+            (wideStr.length() + 1) * sizeof(wchar_t),
             &t_kernel_handle,
             sizeof(uint64_t),
             &params_count,
