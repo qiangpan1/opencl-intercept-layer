@@ -219,23 +219,24 @@ SET TRACE_CS_STATE=%TRACE_DXC_ALL%+%TRACE_CS_STATE_NORMAL%
 SET TRACE_NOCS_PROVIDERS=%TRACE_DX%:0x2F+%TRACE_XAML%:4+%TRACE_WARP%:1+%TRACE_NOCS_PROVIDERS_NORMAL%
 REM call :StartProviders
 
-
 "%~dp0"..\Xperf -on %TRACE_NT_PROVIDER% %TRACE_LARGE_BUFFERS% -f Kernel.etl
 "%~dp0"..\Xperf -start CaptureState -on %TRACE_CS_PROVIDERS% %TRACE_LARGE_BUFFERS% -f CaptureState.etl
 "%~dp0"..\Xperf -capturestate CaptureState %TRACE_CS_STATE%
 "%~dp0"..\Xperf -start NoCaptureState -on %TRACE_NOCS_PROVIDERS% %TRACE_LARGE_BUFFERS% -f NoCaptureState.etl
-"%~dp0"..\Xperf -start IntelOCLTrace -on Intel-OCL-VK:0xffff:1:'stack' -buffersize 1024 -f IntelOCLTrace.etl
+"%~dp0"..\Xperf -start IntelMediaTrace -on Intel-Media:0x01000:1:'stack' -buffersize 1024 -f IntelMediaTrace.etl
+"%~dp0"..\Xperf -start IntelOCLTrace -on Intel-OCL:0xffff:1:'stack' -buffersize 1024 -f IntelOCLTrace.etl
 "%~dp0"..\Xperf -start D3D10Trace -on Intel-Graphics-D3D10:0x03::'stack' -buffersize 1024 -f D3D10Trace.etl
 
 @pause
 
+"%~dp0"..\Xperf -stop IntelMediaTrace
 "%~dp0"..\Xperf -stop IntelOCLTrace
 "%~dp0"..\Xperf -stop D3D10Trace
 "%~dp0"..\Xperf -stop CaptureState
 "%~dp0"..\Xperf -stop NoCaptureState
 "%~dp0"..\Xperf.exe -stop
 echo All loggers stopped, starting merge...
-"%~dp0"..\Xperf -merge Kernel.etl IntelOCLTrace.etl D3D10Trace.etl NoCaptureState.etl CaptureState.etl Merged.etl
+"%~dp0"..\Xperf -merge IntelMediaTrace.etl Kernel.etl IntelOCLTrace.etl D3D10Trace.etl NoCaptureState.etl CaptureState.etl Merged.etl
 echo Restoring Performance Counter Interval
 "%~dp0"..\Xperf -setprofint
 

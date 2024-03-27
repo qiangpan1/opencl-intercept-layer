@@ -149,9 +149,16 @@ void MosTraceEvent4(
     return;
 }
 
-
+void trim(std::string& s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+        return !std::isspace(ch);
+        }));
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+        }).base(), s.end());
+}
 namespace TraceKernel {
-
+    const char* OCL_TRACE_FILTER;
     void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param> &obj ) {
 
         uint64_t t_kernel_handle = reinterpret_cast<uint64_t>(kernel_handle);
@@ -214,7 +221,9 @@ namespace TraceKernel {
     
 }
 namespace APISticker{
-      #define APIMAP_ELEM(e)            \
+     const char* OCL_API_STICKER_FILTER;
+     const char* OCL_API_STICKER_FILTER_NEGATIVE;
+    #define APIMAP_ELEM(e)            \
     {                             \
 #e, __LINE__ - START_LINE \
     }
@@ -343,7 +352,7 @@ const std::map<std::string, uint32_t> APIMap={
     APIMAP_ELEM(clGetKernelSubGroupInfo)
 };
 #undef APIMAP_ELEM
-    void TraceEnter(const char* api)
+    void TraceEnter(const char* api, std::set<std::string>& p_filter, std::set<std::string>& n_filter)
     {
         try
         {
@@ -351,13 +360,41 @@ const std::map<std::string, uint32_t> APIMap={
             char output[100];
             sprintf_s(output,"%s---->%d",api,data);
             OutputDebugString(output);
-            MosTraceEvent(
-                API_STICKER_OCL,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
-                EVENT_TYPE_START,//EVENT_TYPE_START,
-                &data,
-                sizeof(data),
-                nullptr,
-                0);
+            
+            if (!p_filter.empty()) {
+                std::string t_entry(api);
+                if (p_filter.find(t_entry) != p_filter.end()) {
+                    MosTraceEvent(
+                        API_STICKER_OCL,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
+                        EVENT_TYPE_START,//EVENT_TYPE_START,
+                        &data,
+                        sizeof(data),
+                        nullptr,
+                        0);
+                }
+            
+            }
+            else {
+         
+                if (n_filter.find(std::string(api)) != n_filter.end()) {
+                    // negative words not cover
+
+                  /*  OutputDebugString("all the negative keys:");
+
+                    for (const auto & key : n_filter) {
+                        OutputDebugString(key.c_str());
+                    }*/
+
+                    return;
+                }
+                MosTraceEvent(
+                    API_STICKER_OCL,//task num, such as EVENT_ENCODE_API_STICKER_HEVC,
+                    EVENT_TYPE_START,//EVENT_TYPE_START,
+                    &data,
+                    sizeof(data),
+                    nullptr,
+                    0);
+            }
         }
         catch (...)
         {

@@ -103,7 +103,12 @@ bool CLIntercept::Create( void* pGlobalData, CLIntercept*& pIntercept )
     if( pIntercept )
     {
         success = pIntercept->init();
+
         MosTraceEventInit();
+        APISticker::OCL_API_STICKER_FILTER=std::getenv("OCL_API_STICKER_FILTER");
+        APISticker::OCL_API_STICKER_FILTER_NEGATIVE = std::getenv("OCL_API_STICKER_FILTER_NEGATIVE");
+        TraceKernel::OCL_TRACE_FILTER= std::getenv("OCL_TRACE_FILTER");
+
         if( success == false )
         {
             Delete( pIntercept );

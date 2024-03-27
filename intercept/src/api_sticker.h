@@ -13,6 +13,9 @@
 #include <evntprov.h>
 #include "CL/cl.h"
 #include <string>
+#include <set>
+#include <sstream>
+#include <cstdlib> 
 
 typedef struct _ETW_TRACE_CONTEXT {
     REGHANDLE Handle;
@@ -50,7 +53,6 @@ typedef enum _OCL_EVENT_TYPE{
     EVENT_TYPE_INFO2 = 3,           //! function extra information event
 } OCL_EVENT_TYPE;
 
-
 void NTAPI EtwControlCallback(LPCGUID SourceId,
     ULONG ControlCode,
     UCHAR Level,
@@ -83,12 +85,31 @@ typedef struct _MT_PARAM {
     }
 // ============================================================================================================================
 
+
+void trim(std::string& s);
+inline std::set<std::string> split(const std::string& s, char delimiter) {
+    std::set<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s);
+    while (std::getline(tokenStream, token, delimiter)) {
+        trim(token);
+        tokens.insert(token);
+    }
+    return tokens;
+}
+
+
 namespace APISticker{
-
- void TraceEnter(const char* api);
-
+    extern  const char* OCL_API_STICKER_FILTER;
+    extern  const char* OCL_API_STICKER_FILTER_NEGATIVE;
+    void TraceEnter(const char* api, std::set<std::string>& p_filter, std::set<std::string>& n_filter);
 }// namespace APISticker
-#define API_STICKER_TRACE_ENTER() APISticker::TraceEnter(__func__)
+#define API_STICKER_TRACE_ENTER() \
+    do{\
+        std::set<std::string> p_filter=split(std::string(APISticker::OCL_API_STICKER_FILTER==nullptr? "":APISticker::OCL_API_STICKER_FILTER),',');\
+        std::set<std::string> n_filter=split(std::string(APISticker::OCL_API_STICKER_FILTER_NEGATIVE==nullptr? "":APISticker::OCL_API_STICKER_FILTER_NEGATIVE),',');\
+        APISticker::TraceEnter(__func__,p_filter,n_filter);\
+    }while(0)
 
 namespace TraceKernel {
     struct Kernel_Param {
@@ -101,14 +122,21 @@ namespace TraceKernel {
             : index(arg_index), args_size(arg_size), pointer(arg_pointer) {
         }
     };
-
+    extern const char* OCL_TRACE_FILTER;
     void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param>& obj);
     void TraceCopyBuffer(cl_mem bufferSrc, cl_mem bufferDst);
 }
 #define TRACE_KERNEL(kernel) \
     do{\
     const std::string kernel_name = pIntercept->getShortKernelName(kernel);\
-    TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel));\
+    auto t_set=split(std::string(TraceKernel::OCL_TRACE_FILTER==nullptr? "":TraceKernel::OCL_TRACE_FILTER),',');\
+    if(t_set.empty() ) { \
+        TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel));\
+    }else{\
+        if(t_set.find("clEnqueueNDRangeKernel") != t_set.end()){\
+            TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel));\
+        }\
+     }\
 }while(0)
 
 //id could be api name 
