@@ -157,8 +157,19 @@ void trim(std::string& s) {
         return !std::isspace(ch);
         }).base(), s.end());
 }
+std::set<std::string> split(const std::string& s, char delimiter) {
+    std::set<std::string> tokens;
+    std::string token;
+    std::istringstream tokenStream(s);
+    while (std::getline(tokenStream, token, delimiter)) {
+        trim(token);
+        tokens.insert(token);
+    }
+    return tokens;
+}
 namespace TraceKernel {
     const char* OCL_TRACE_FILTER;
+    std::set<std::string>  trace_filter;
     void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param> &obj ) {
 
         uint64_t t_kernel_handle = reinterpret_cast<uint64_t>(kernel_handle);
@@ -223,6 +234,8 @@ namespace TraceKernel {
 namespace APISticker{
      const char* OCL_API_STICKER_FILTER;
      const char* OCL_API_STICKER_FILTER_NEGATIVE;
+     std::set<std::string> p_filter;
+     std::set<std::string> n_filter;
     #define APIMAP_ELEM(e)            \
     {                             \
 #e, __LINE__ - START_LINE \

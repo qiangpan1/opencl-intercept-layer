@@ -105,9 +105,15 @@ bool CLIntercept::Create( void* pGlobalData, CLIntercept*& pIntercept )
         success = pIntercept->init();
 
         MosTraceEventInit();
+
         APISticker::OCL_API_STICKER_FILTER=std::getenv("OCL_API_STICKER_FILTER");
         APISticker::OCL_API_STICKER_FILTER_NEGATIVE = std::getenv("OCL_API_STICKER_FILTER_NEGATIVE");
-        TraceKernel::OCL_TRACE_FILTER= std::getenv("OCL_TRACE_FILTER");
+
+        APISticker::p_filter = split(std::string(APISticker::OCL_API_STICKER_FILTER == nullptr ? "" : APISticker::OCL_API_STICKER_FILTER), ','); 
+        APISticker::n_filter = split(std::string(APISticker::OCL_API_STICKER_FILTER_NEGATIVE == nullptr ? "" : APISticker::OCL_API_STICKER_FILTER_NEGATIVE), ','); 
+
+        TraceKernel::OCL_TRACE_FILTER = std::getenv("OCL_TRACE_FILTER");
+        TraceKernel::trace_filter = split(std::string(TraceKernel::OCL_TRACE_FILTER == nullptr ? "" : TraceKernel::OCL_TRACE_FILTER), ',');
 
         if( success == false )
         {

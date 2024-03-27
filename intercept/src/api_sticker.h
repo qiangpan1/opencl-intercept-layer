@@ -87,28 +87,19 @@ typedef struct _MT_PARAM {
 
 
 void trim(std::string& s);
-inline std::set<std::string> split(const std::string& s, char delimiter) {
-    std::set<std::string> tokens;
-    std::string token;
-    std::istringstream tokenStream(s);
-    while (std::getline(tokenStream, token, delimiter)) {
-        trim(token);
-        tokens.insert(token);
-    }
-    return tokens;
-}
+std::set<std::string> split(const std::string& s, char delimiter);
 
 
 namespace APISticker{
     extern  const char* OCL_API_STICKER_FILTER;
     extern  const char* OCL_API_STICKER_FILTER_NEGATIVE;
+    extern std::set<std::string> p_filter;
+    extern std::set<std::string> n_filter;
     void TraceEnter(const char* api, std::set<std::string>& p_filter, std::set<std::string>& n_filter);
 }// namespace APISticker
 #define API_STICKER_TRACE_ENTER() \
     do{\
-        std::set<std::string> p_filter=split(std::string(APISticker::OCL_API_STICKER_FILTER==nullptr? "":APISticker::OCL_API_STICKER_FILTER),',');\
-        std::set<std::string> n_filter=split(std::string(APISticker::OCL_API_STICKER_FILTER_NEGATIVE==nullptr? "":APISticker::OCL_API_STICKER_FILTER_NEGATIVE),',');\
-        APISticker::TraceEnter(__func__,p_filter,n_filter);\
+        APISticker::TraceEnter(__func__,APISticker::p_filter,APISticker::n_filter);\
     }while(0)
 
 namespace TraceKernel {
@@ -123,17 +114,17 @@ namespace TraceKernel {
         }
     };
     extern const char* OCL_TRACE_FILTER;
+    extern std::set<std::string> trace_filter;
     void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param>& obj);
     void TraceCopyBuffer(cl_mem bufferSrc, cl_mem bufferDst);
 }
 #define TRACE_KERNEL(kernel) \
     do{\
     const std::string kernel_name = pIntercept->getShortKernelName(kernel);\
-    auto t_set=split(std::string(TraceKernel::OCL_TRACE_FILTER==nullptr? "":TraceKernel::OCL_TRACE_FILTER),',');\
-    if(t_set.empty() ) { \
+    if(TraceKernel::trace_filter.empty() ) { \
         TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel));\
     }else{\
-        if(t_set.find("clEnqueueNDRangeKernel") != t_set.end()){\
+        if(TraceKernel::trace_filter.find("clEnqueueNDRangeKernel") != TraceKernel::trace_filter.end()){\
             TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel));\
         }\
      }\
