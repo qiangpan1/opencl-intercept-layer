@@ -1,0 +1,363 @@
+<?xml version="1.0"?>
+
+<instrumentationManifest xsi:schemaLocation="http://schemas.microsoft.com/win/2004/08/events eventman.xsd" xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:trace="http://schemas.microsoft.com/win/2004/08/events/trace">
+	<instrumentation>
+		<events>
+			<provider name="Intel-OCL" guid="{D5A552AC-0B8D-4F69-B26C-A7B6C16F6B51}" symbol="Intel_OCL" resourceFileName="no_resource_file_defined" messageFileName="no_message_file_defined" parameterFileName="no_parameter_file_defined">
+				<events>
+					<event symbol="API_STICKER_OCL_Info" value="520" version="0" task="API_STICKER_OCL" opcode="win:Info" ></event>
+					<event symbol="API_STICKER_OCL_Entry" value="521" version="0" task="API_STICKER_OCL" opcode="win:Start" template="t_API_Sticker_OCL_Entry"></event>
+					<event symbol="API_STICKER_OCL_Exit" value="522" version="0" task="API_STICKER_OCL" opcode="win:Stop" ></event>
+					<event symbol="API_OCL_EnqueueNDRangeKernel_Info" value="524" version="0" task="API_OCL_EnqueueNDRangeKernel" opcode="win:Info"  template="t_API_OCL_EnqueueNDRangeKernel_Info"></event>
+					<event symbol="API_OCL_EnqueueNDRangeKernel_Entry" value="525" version="0" task="API_OCL_EnqueueNDRangeKernel" opcode="win:Start" template="t_API_OCL_EnqueueNDRangeKernel_Entry"></event>
+					<event symbol="API_OCL_EnqueueNDRangeKernel_Exit" value="526" version="0" task="API_OCL_EnqueueNDRangeKernel" opcode="win:Stop" ></event>
+					<event symbol="API_OCL_EnqueueCopyBuffer_Info" value="528" version="0" task="API_OCL_EnqueueNDRangeKernel" opcode="win:Info"  ></event>
+					<event symbol="API_OCL_EnqueueCopyBuffer_Entry" value="529" version="0" task="API_OCL_EnqueueNDRangeKernel" opcode="win:Start" template="t_API_OCL_EnqueueCopyBuffer_Entry"></event>
+					<event symbol="API_OCL_EnqueueCopyBuffer_Exit" value="530" version="0" task="API_OCL_EnqueueNDRangeKernel" opcode="win:Stop" ></event>
+
+					<event symbol="API_OCL_CreateBuffer_Exit" value="542" version="0" task="API_OCL_CreateBuffer" opcode="win:Stop" template="t_API_OCL_CreateBuffer_Exit" ></event>
+				</events>
+				<tasks>
+					<task name="API_STICKER_OCL" symbol="API_STICKER_OCL" value="130" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_EnqueueNDRangeKernel" symbol="API_OCL_EnqueueNDRangeKernel" value="131" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_EnqueueCopyBuffer" symbol="API_OCL_EnqueueCopyBuffer" value="132" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_EnqueueMapBuffer" symbol="API_OCL_EnqueueMapBuffer" value="133" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_EnqueueUnmapMemObject" symbol="API_OCL_EnqueueUnmapMemObject" value="134" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+
+					<task name="API_OCL_CreateBuffer" symbol="API_OCL_CreateBuffer" value="135" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_EnqueueReadBuffer" symbol="API_OCL_EnqueueReadBuffer" value="136" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_EnqueueWriteBuffer" symbol="API_OCL_EnqueueWriteBuffer" value="137" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_CreateImage" symbol="API_OCL_CreateImage" value="138" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_EnqueueWriteImage" symbol="API_OCL_EnqueueWriteImage" value="139" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_EnqueueReadImage" symbol="API_OCL_EnqueueReadImage" value="140" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_ReleaseMemObject" symbol="API_OCL_ReleaseMemObject" value="141" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+		
+
+				</tasks>
+				<opcodes></opcodes>
+				<channels>
+					<importChannel name="TraceClassic" chid="TraceClassic"></importChannel>
+				</channels>
+				<maps>
+					<valueMap name="API_STICKER_OCL_MAP">
+						<map value="0" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.0.message)"></map>
+						<map value="1" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.1.message)"></map>
+						<map value="2" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.2.message)"></map>
+						<map value="3" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.3.message)"></map>
+						<map value="4" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.4.message)"></map>
+						<map value="5" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.5.message)"></map>
+						<map value="6" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.6.message)"></map>
+						<map value="7" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.7.message)"></map>
+						<map value="8" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.8.message)"></map>
+						<map value="9" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.9.message)"></map>
+						<map value="10" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.10.message)"></map>
+						<map value="11" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.11.message)"></map>
+						<map value="12" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.12.message)"></map>
+						<map value="13" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.13.message)"></map>
+						<map value="14" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.14.message)"></map>
+						<map value="15" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.15.message)"></map>
+						<map value="16" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.16.message)"></map>
+						<map value="17" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.17.message)"></map>
+						<map value="18" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.18.message)"></map>
+						<map value="19" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.19.message)"></map>
+						<map value="20" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.20.message)"></map>
+						<map value="21" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.21.message)"></map>
+						<map value="22" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.22.message)"></map>
+						<map value="23" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.23.message)"></map>
+						<map value="24" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.24.message)"></map>
+						<map value="25" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.25.message)"></map>
+						<map value="26" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.26.message)"></map>
+						<map value="27" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.27.message)"></map>
+						<map value="28" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.28.message)"></map>
+						<map value="29" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.29.message)"></map>
+						<map value="30" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.30.message)"></map>
+						<map value="31" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.31.message)"></map>
+						<map value="32" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.32.message)"></map>
+						<map value="33" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.33.message)"></map>
+						<map value="34" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.34.message)"></map>
+						<map value="35" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.35.message)"></map>
+						<map value="36" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.36.message)"></map>
+						<map value="37" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.37.message)"></map>
+						<map value="38" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.38.message)"></map>
+						<map value="39" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.39.message)"></map>
+						<map value="40" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.40.message)"></map>
+						<map value="41" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.41.message)"></map>
+						<map value="42" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.42.message)"></map>
+						<map value="43" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.43.message)"></map>
+						<map value="44" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.44.message)"></map>
+						<map value="45" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.45.message)"></map>
+						<map value="46" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.46.message)"></map>
+						<map value="47" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.47.message)"></map>
+						<map value="48" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.48.message)"></map>
+						<map value="49" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.49.message)"></map>
+						<map value="50" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.50.message)"></map>
+						<map value="51" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.51.message)"></map>
+						<map value="52" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.52.message)"></map>
+						<map value="53" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.53.message)"></map>
+						<map value="54" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.54.message)"></map>
+						<map value="55" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.55.message)"></map>
+						<map value="56" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.56.message)"></map>
+						<map value="57" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.57.message)"></map>
+						<map value="58" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.58.message)"></map>
+						<map value="59" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.59.message)"></map>
+						<map value="60" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.60.message)"></map>
+						<map value="61" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.61.message)"></map>
+						<map value="62" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.62.message)"></map>
+						<map value="63" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.63.message)"></map>
+						<map value="64" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.64.message)"></map>
+						<map value="65" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.65.message)"></map>
+						<map value="66" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.66.message)"></map>
+						<map value="67" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.67.message)"></map>
+						<map value="68" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.68.message)"></map>
+						<map value="69" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.69.message)"></map>
+						<map value="70" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.70.message)"></map>
+						<map value="71" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.71.message)"></map>
+						<map value="72" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.72.message)"></map>
+						<map value="73" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.73.message)"></map>
+						<map value="74" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.74.message)"></map>
+						<map value="75" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.75.message)"></map>
+						<map value="76" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.76.message)"></map>
+						<map value="77" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.77.message)"></map>
+						<map value="78" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.78.message)"></map>
+						<map value="79" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.79.message)"></map>
+						<map value="80" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.80.message)"></map>
+						<map value="81" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.81.message)"></map>
+						<map value="82" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.82.message)"></map>
+						<map value="83" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.83.message)"></map>
+						<map value="84" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.84.message)"></map>
+						<map value="85" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.85.message)"></map>
+						<map value="86" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.86.message)"></map>
+						<map value="87" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.87.message)"></map>
+						<map value="88" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.88.message)"></map>
+						<map value="89" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.89.message)"></map>
+						<map value="90" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.90.message)"></map>
+						<map value="91" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.91.message)"></map>
+						<map value="92" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.92.message)"></map>
+						<map value="93" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.93.message)"></map>
+						<map value="94" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.94.message)"></map>
+						<map value="95" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.95.message)"></map>
+						<map value="96" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.96.message)"></map>
+						<map value="97" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.97.message)"></map>
+						<map value="98" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.98.message)"></map>
+						<map value="99" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.99.message)"></map>
+						<map value="100" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.100.message)"></map>
+						<map value="101" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.101.message)"></map>
+						<map value="102" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.102.message)"></map>
+						<map value="103" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.103.message)"></map>
+						<map value="104" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.104.message)"></map>
+						<map value="105" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.105.message)"></map>
+						<map value="106" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.106.message)"></map>
+						<map value="107" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.107.message)"></map>
+						<map value="108" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.108.message)"></map>
+						<map value="109" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.109.message)"></map>
+						<map value="110" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.110.message)"></map>
+						<map value="111" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.111.message)"></map>
+						<map value="112" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.112.message)"></map>
+						<map value="113" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.113.message)"></map>
+						<map value="114" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.114.message)"></map>
+						<map value="115" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.115.message)"></map>
+						<map value="116" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.116.message)"></map>
+						<map value="117" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.117.message)"></map>
+						<map value="118" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.118.message)"></map>
+						<map value="119" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.119.message)"></map>
+						<map value="120" message="$(string.Intel_OCL_VK.map.API_STICKER_OCL_MAP.119.message)"></map>
+					</valueMap>
+					<bitMap name="clmemFlags">
+						<map value="0x1" message="$(string.Intel_OCL_VK.map.clmemFlags.1.message)"></map>
+						<map value="0x2" message="$(string.Intel_OCL_VK.map.clmemFlags.2.message)"></map>
+						<map value="0x4" message="$(string.Intel_OCL_VK.map.clmemFlags.4.message)"></map>
+						<map value="0x8" message="$(string.Intel_OCL_VK.map.clmemFlags.8.message)"></map>
+						<map value="0x10" message="$(string.Intel_OCL_VK.map.clmemFlags.16.message)"></map>
+						<map value="0x20" message="$(string.Intel_OCL_VK.map.clmemFlags.32.message)"></map>
+						<map value="0x80" message="$(string.Intel_OCL_VK.map.clmemFlags.128.message)"></map>
+						<map value="0x100" message="$(string.Intel_OCL_VK.map.clmemFlags.256.message)"></map>
+						<map value="0x200" message="$(string.Intel_OCL_VK.map.clmemFlags.512.message)"></map>
+						<map value="0x400" message="$(string.Intel_OCL_VK.map.clmemFlags.1024.message)"></map>
+						<map value="0x800" message="$(string.Intel_OCL_VK.map.clmemFlags.2048.message)"></map>
+						<map value="0x1000" message="$(string.Intel_OCL_VK.map.clmemFlags.4096.message)"></map>
+						<map value="0x100000" message="$(string.Intel_OCL_VK.map.clmemFlags.1048576.message)"></map>
+					</bitMap>
+				</maps>
+				<templates>
+					<template tid="t_API_Sticker_OCL_Entry">
+						<data name="[API Enter]" inType="win:UInt32" outType="xs:unsignedInt" map="API_STICKER_OCL_MAP"></data>
+					</template>
+					<template tid="t_API_OCL_EnqueueNDRangeKernel_Entry">
+						<data name="[Kernel Name]" inType="win:UnicodeString" outType="xs:string"></data>
+					</template>
+					<template tid="t_API_OCL_EnqueueNDRangeKernel_Info">
+						<data name="[Kernel Handle]" inType="win:UInt64" outType="win:HexInt64"></data>
+						<data name="Count" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<struct name="[Kernel Params]" count="Count">
+							<data name="arg_index" inType="win:UInt32" outType="xs:unsignedInt"></data>
+							<data name="arg_size" inType="win:UInt32" outType="xs:unsignedInt"></data>
+							<data name="arg_value" inType="win:UInt64" outType="win:HexInt64"></data>
+						</struct>
+					</template>
+					<template tid="t_API_OCL_EnqueueCopyBuffer_Entry">
+						<data name="[Buffer Handle Input]" inType="win:UInt64" outType="win:HexInt64" ></data>
+						<data name="[Buffer Handle Output]" inType="win:UInt64" outType="win:HexInt64" ></data>
+					</template>
+
+					<template tid="t_API_OCL_CreateBuffer_Exit">
+						<data name="[Queue Context]" inType="win:UInt64" outType="win:HexInt64" ></data>
+						<data name="[Flags]" inType="win:UInt32" map="clmemFlags" ></data>
+						<data name="[Size]" inType="win:UInt32" outType="xs:unsignedInt" ></data>
+						<data name="[Host_ptr]" inType="win:UInt64" outType="win:HexInt64" ></data>
+						<data name="[Buffer Handle]" inType="win:UInt64" outType="win:HexInt64" ></data>
+						<data name="[Duration Time]" inType="win:Int64" outType="xs:long" ></data>
+					</template>
+
+				</templates>
+			</provider>
+		</events>
+	</instrumentation>
+	<localization>
+		<resources culture="en-US">
+			<stringTable>
+				<string id="task.None" value="None"></string>
+				<string id="opcode.Stop" value="Stop"></string>
+				<string id="opcode.Start" value="Start"></string>
+				<string id="opcode.Info" value="Info"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.0.message" value="clGetPlatformIDs"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.1.message" value="clGetPlatformInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.2.message" value="clGetDeviceIDs"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.3.message" value="clGetDeviceInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.4.message" value="clCreateSubDevices"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.5.message" value="clRetainDevice"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.6.message" value="clReleaseDevice"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.7.message" value="clCreateContext"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.8.message" value="clCreateContextFromType"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.9.message" value="clRetainContext"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.10.message" value="clReleaseContext"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.11.message" value="clGetContextInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.12.message" value="clCreateCommandQueue"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.13.message" value="clRetainCommandQueue"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.14.message" value="clReleaseCommandQueue"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.15.message" value="clGetCommandQueueInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.16.message" value="clSetCommandQueueProperty"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.17.message" value="clCreateBuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.18.message" value="clCreateBufferWithProperties"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.19.message" value="clCreateSubBuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.20.message" value="clCreateImage"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.21.message" value="clCreateImageWithProperties"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.22.message" value="clCreateImage2D"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.23.message" value="clCreateImage3D"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.24.message" value="clRetainMemObject"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.25.message" value="clReleaseMemObject"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.26.message" value="clGetSupportedImageFormats"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.27.message" value="clGetMemObjectInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.28.message" value="clGetImageInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.29.message" value="clSetMemObjectDestructorCallback"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.30.message" value="clCreateSampler"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.31.message" value="clRetainSampler"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.32.message" value="clReleaseSampler"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.33.message" value="clGetSamplerInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.34.message" value="clCreateProgramWithSource"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.35.message" value="clCreateProgramWithBinary"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.36.message" value="clCreateProgramWithBuiltInKernels"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.37.message" value="clRetainProgram"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.38.message" value="clReleaseProgram"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.39.message" value="clBuildProgram"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.40.message" value="clCompileProgram"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.41.message" value="clLinkProgram"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.42.message" value="clSetProgramReleaseCallback"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.43.message" value="clSetProgramSpecializationConstant"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.44.message" value="clUnloadPlatformCompiler"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.45.message" value="clUnloadCompiler"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.46.message" value="clGetProgramInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.47.message" value="clGetProgramBuildInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.48.message" value="clCreateKernel"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.49.message" value="clCreateKernelsInProgram"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.50.message" value="clRetainKernel"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.51.message" value="clReleaseKernel"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.52.message" value="clSetKernelArg"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.53.message" value="clGetKernelInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.54.message" value="clGetKernelArgInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.55.message" value="clGetKernelWorkGroupInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.56.message" value="clWaitForEvents"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.57.message" value="clGetEventInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.58.message" value="clCreateUserEvent"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.59.message" value="clRetainEvent"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.60.message" value="clReleaseEvent"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.61.message" value="clSetUserEventStatus"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.62.message" value="clSetEventCallback"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.63.message" value="clGetEventProfilingInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.64.message" value="clFlush"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.65.message" value="clFinish"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.66.message" value="clEnqueueReadBuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.67.message" value="clEnqueueReadBufferRect"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.68.message" value="clEnqueueWriteBuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.69.message" value="clEnqueueWriteBufferRect"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.70.message" value="clEnqueueFillBuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.71.message" value="clEnqueueCopyBuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.72.message" value="clEnqueueCopyBufferRect"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.73.message" value="clEnqueueReadImage"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.74.message" value="clEnqueueWriteImage"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.75.message" value="clEnqueueFillImage"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.76.message" value="clEnqueueCopyImage"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.77.message" value="clEnqueueCopyImageToBuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.78.message" value="clEnqueueCopyBufferToImage"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.79.message" value="clEnqueueMapBuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.80.message" value="clEnqueueMapImage"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.81.message" value="clEnqueueUnmapMemObject"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.82.message" value="clEnqueueMigrateMemObjects"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.83.message" value="clEnqueueNDRangeKernel"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.84.message" value="clEnqueueTask"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.85.message" value="clEnqueueNativeKernel"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.86.message" value="clEnqueueMarker"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.87.message" value="clEnqueueWaitForEvents"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.88.message" value="clEnqueueBarrier"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.89.message" value="clEnqueueMarkerWithWaitList"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.90.message" value="clEnqueueBarrierWithWaitList"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.91.message" value="clGetExtensionFunctionAddress"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.92.message" value="clGetExtensionFunctionAddressForPlatform"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.93.message" value="clCreateFromGLBuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.94.message" value="clCreateFromGLTexture"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.95.message" value="clCreateFromGLTexture2D"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.96.message" value="clCreateFromGLTexture3D"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.97.message" value="clCreateFromGLRenderbuffer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.98.message" value="clGetGLObjectInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.99.message" value="clGetGLTextureInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.100.message" value="clEnqueueAcquireGLObjects"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.101.message" value="clEnqueueReleaseGLObjects"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.102.message" value="clSVMAlloc"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.103.message" value="clSVMFree"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.104.message" value="clEnqueueSVMFree"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.105.message" value="clEnqueueSVMMemcpy"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.106.message" value="clEnqueueSVMMemFill"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.107.message" value="clEnqueueSVMMap"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.108.message" value="clEnqueueSVMUnmap"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.109.message" value="clSetKernelArgSVMPointer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.110.message" value="clSetKernelExecInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.111.message" value="clCreatePipe"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.112.message" value="clGetPipeInfo"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.113.message" value="clCreateCommandQueueWithProperties"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.114.message" value="clCreateSamplerWithProperties"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.115.message" value="clSetDefaultDeviceCommandQueue"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.116.message" value="clGetDeviceAndHostTimer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.117.message" value="clGetHostTimer"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.118.message" value="clCreateProgramWithIL"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.119.message" value="clCloneKernel"></string>
+				<string id="Intel_OCL_VK.map.API_STICKER_OCL_MAP.120.message" value="clGetKernelSubGroupInf"></string>
+
+				<string id="Intel_OCL_VK.map.clmemFlags.1.message" value="READ_WRITE"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.2.message" value="WRITE_ONLY"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.4.message" value="READ_ONLY"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.8.message" value="USE_HOST_PTR"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.16.message" value="ALLOC_HOST_PTR"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.32.message" value="COPY_HOST_PTR"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.128.message" value="HOST_WRITE_ONLY"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.256.message" value="HOST_READ_ONLY"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.512.message" value="HOST_NO_ACCESS"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.1024.message" value="SVM_FINE_GRAIN_BUFFER"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.2048.message" value="SVM_ATOMICS"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.4096.message" value="KERNEL_READ_AND_WRITE"></string>
+				<string id="Intel_OCL_VK.map.clmemFlags.1048576.message" value="CL_MEM_FORCE_HOST_MEMORY_INTEL"></string>
+
+
+			</stringTable>
+		</resources>
+	</localization>
+</instrumentationManifest>
+
