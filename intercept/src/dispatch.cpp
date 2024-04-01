@@ -969,7 +969,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
             flags,
             size,
             host_ptr );
-
+        
         if( pIntercept->config().CaptureReplay )
         {
             // Make sure that there are no device only buffers
@@ -980,12 +980,14 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
         CHECK_ERROR_INIT( errcode_ret );
         HOST_PERFORMANCE_TIMING_START();
 
-        cl_mem  retVal = pIntercept->dispatch().clCreateBuffer(
+        cl_mem retVal;
+        std::chrono::microseconds duration;
+        std::tie(retVal, duration) = TraceKernel::TraceFuncTiming(pIntercept->dispatch().clCreateBuffer,
             context,
             flags,
             size,
             host_ptr,
-            errcode_ret );
+            errcode_ret);
 
         HOST_PERFORMANCE_TIMING_END();
         ADD_BUFFER( retVal );
@@ -994,6 +996,8 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
         CHECK_ERROR( errcode_ret[0] );
         ADD_OBJECT_ALLOCATION( retVal );
         CALL_LOGGING_EXIT( errcode_ret[0], "returned %p", retVal );
+
+        TraceKernel::TraceCreateBuffer(context, flags, size, host_ptr, retVal, duration);
 
         return retVal;
     }

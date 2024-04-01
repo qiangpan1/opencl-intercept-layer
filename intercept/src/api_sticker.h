@@ -16,6 +16,9 @@
 #include <set>
 #include <sstream>
 #include <cstdlib> 
+#include <chrono>
+#include <tuple>
+#include <utility>
 
 typedef struct _ETW_TRACE_CONTEXT {
     REGHANDLE Handle;
@@ -117,6 +120,23 @@ namespace TraceKernel {
     extern std::set<std::string> trace_filter;
     void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param>& obj);
     void TraceCopyBuffer(cl_mem bufferSrc, cl_mem bufferDst);
+    void TraceCreateBuffer(cl_context context,
+        cl_mem_flags flags,
+        size_t size,
+        void* host_ptr,
+        cl_mem retVal,
+        std::chrono::microseconds &duration);
+
+
+    template<typename Func, typename... Args>
+    auto TraceFuncTiming(Func func, Args&&... args) -> std::tuple<decltype(func(std::forward<Args>(args)...)), std::chrono::microseconds> {
+        auto start = std::chrono::high_resolution_clock::now();
+        auto result = func(std::forward<Args>(args)...);
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        return std::make_tuple(result, duration);
+    }
+
 }
 #define TRACE_KERNEL(kernel) \
     do{\
@@ -129,6 +149,8 @@ namespace TraceKernel {
         }\
      }\
 }while(0)
+#define TRACE_TIMING(kernel)
+
 
 //id could be api name 
 //lvl 

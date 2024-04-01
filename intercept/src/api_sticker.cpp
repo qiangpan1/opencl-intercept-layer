@@ -1,7 +1,8 @@
-#include "api_sticker.h"
+﻿#include "api_sticker.h"
 #include <string>
 #include <cinttypes>
 #include <stdexcept>
+
 
 //const GUID g_intelMedia = { 0x4e1c52c9, 0x1d1e, 0x4470, {0xa1, 0x10, 0x25, 0xa9, 0xf3, 0xeb, 0xe1, 0xa5} };
 const GUID g_intelMedia = { 0xd5a552ac, 0xb8d, 0x4f69, 0xb2, 0x6c, 0xa7, 0xb6, 0xc1, 0x6f, 0x6b, 0x51 };
@@ -226,6 +227,32 @@ namespace TraceKernel {
             EVENT_TYPE_START,
             &t_info,
             sizeof(t_info),
+            nullptr,
+            0);
+    }
+
+    void TraceCreateBuffer(
+        cl_context context,
+        cl_mem_flags flags,
+        size_t size,
+        void* host_ptr,
+        cl_mem retVal,
+        std::chrono::microseconds &duration) {
+
+        struct CreateBuffer {
+            uint64_t context;
+            uint32_t flags;
+            uint32_t size;
+            uint64_t host_ptr;
+            uint64_t retVal;
+            int64_t duration_time;
+        } t_end{(uint64_t)context,(uint32_t)flags,(uint32_t)size,(uint64_t)host_ptr,(uint64_t)retVal, (int64_t)duration.count() };
+
+        MosTraceEvent(
+            API_OCL_CreateBuffer,
+            EVENT_TYPE_END,
+            &t_end,
+            sizeof(t_end),
             nullptr,
             0);
     }
