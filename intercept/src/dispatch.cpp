@@ -988,6 +988,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
             size,
             host_ptr,
             errcode_ret);
+        TraceKernel::TraceCreateBuffer(context, flags, size, host_ptr, retVal, duration);
 
         HOST_PERFORMANCE_TIMING_END();
         ADD_BUFFER( retVal );
@@ -997,7 +998,7 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
         ADD_OBJECT_ALLOCATION( retVal );
         CALL_LOGGING_EXIT( errcode_ret[0], "returned %p", retVal );
 
-        TraceKernel::TraceCreateBuffer(context, flags, size, host_ptr, retVal, duration);
+        
 
         return retVal;
     }
@@ -4446,7 +4447,10 @@ CL_API_ENTRY void* CL_API_CALL CLIRN(clEnqueueMapBuffer)(
 
             ITT_ADD_PARAM_AS_METADATA( blocking_map );
 
-            retVal = pIntercept->dispatch().clEnqueueMapBuffer(
+
+            //cl_mem retVal;
+            std::chrono::microseconds duration;
+            std::tie(retVal, duration) = TraceKernel::TraceFuncTiming(pIntercept->dispatch().clEnqueueMapBuffer,
                 command_queue,
                 buffer,
                 blocking_map,
@@ -4456,7 +4460,17 @@ CL_API_ENTRY void* CL_API_CALL CLIRN(clEnqueueMapBuffer)(
                 num_events_in_wait_list,
                 event_wait_list,
                 event,
-                errcode_ret );
+                errcode_ret);
+
+            TRACE_MapBuffer(
+                command_queue,
+                buffer,
+                blocking_map,
+                map_flags,
+                offset,
+                cb,
+                duration
+            );
 
             HOST_PERFORMANCE_TIMING_END_WITH_TAG();
             DEVICE_PERFORMANCE_TIMING_END_WITH_TAG( command_queue, event );

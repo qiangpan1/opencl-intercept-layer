@@ -114,6 +114,15 @@ namespace TraceKernel {
         cl_mem retVal,
         std::chrono::microseconds &duration);
 
+    void TraceMapBuffer(
+        cl_command_queue command_queue,
+        cl_mem buffer,
+        cl_bool blocking_map,
+        cl_map_flags map_flags,
+        size_t offset,
+        size_t cb,
+        std::chrono::microseconds& duration
+    );
 
     template<typename Func, typename... Args>
     auto TraceFuncTiming(Func func, Args&&... args) -> std::tuple<decltype(func(std::forward<Args>(args)...)), std::chrono::microseconds> {
@@ -146,6 +155,9 @@ namespace TraceKernel {
 
 #define TRACE_CreateBuffer(...)\
     TRACE_ACTION_IF_FILTERED(TraceKernel::TraceCreateBuffer(__VA_ARGS__), "clCreateBuffer")
+
+#define TRACE_MapBuffer(...)\
+    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceMapBuffer(__VA_ARGS__), "clEnqueueMapBuffer")
 
 
 

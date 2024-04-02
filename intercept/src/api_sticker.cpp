@@ -231,6 +231,45 @@ namespace TraceKernel {
             0);
     }
 
+    /*   CL_API_ENTRY void* CL_API_CALL CLIRN(clEnqueueMapBuffer)(
+       cl_command_queue command_queue,
+       cl_mem buffer,
+       cl_bool blocking_map,
+       cl_map_flags map_flags,
+       size_t offset,
+       size_t cb,
+       cl_uint num_events_in_wait_list,
+       const cl_event * event_wait_list,
+       cl_event * event,
+       cl_int * errcode_ret)*/
+    void TraceMapBuffer(
+        cl_command_queue command_queue,
+        cl_mem buffer,
+        cl_bool blocking_map,
+        cl_map_flags map_flags,
+        size_t offset,
+        size_t cb,
+        std::chrono::microseconds& duration
+        ) {
+
+        struct MapBuffer {
+            uint64_t command_queue;
+            uint64_t buffer;
+            bool blocking_map;
+            uint32_t flags;
+            uint32_t offsize;
+            uint32_t cb;
+            int64_t duration_time;
+        } t_end{ (uint64_t)command_queue,(uint64_t)buffer,(bool)blocking_map,(uint32_t)map_flags,(uint32_t)offset,(uint32_t)cb, (int64_t)duration.count()};
+
+        MosTraceEvent(
+            API_OCL_EnqueueMapBuffer,
+            EVENT_TYPE_END,
+            &t_end,
+            sizeof(t_end),
+            nullptr,
+            0);
+    }
     void TraceCreateBuffer(
         cl_context context,
         cl_mem_flags flags,

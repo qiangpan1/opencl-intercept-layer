@@ -16,6 +16,10 @@
 					<event symbol="API_OCL_EnqueueCopyBuffer_Exit" value="530" version="0" task="API_OCL_EnqueueNDRangeKernel" opcode="win:Stop" ></event>
 
 					<event symbol="API_OCL_CreateBuffer_Exit" value="542" version="0" task="API_OCL_CreateBuffer" opcode="win:Stop" template="t_API_OCL_CreateBuffer_Exit" ></event>
+
+					<event symbol="API_OCL_EnqueueMapBuffer_Exit" value="534" version="0" task="API_OCL_EnqueueMapBuffer" opcode="win:Stop" template="t_API_OCL_EnqueueMapBuffer_Exit"></event>
+					
+					
 				</events>
 				<tasks>
 					<task name="API_STICKER_OCL" symbol="API_STICKER_OCL" value="130" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
@@ -177,6 +181,11 @@
 						<map value="0x1000" message="$(string.Intel_OCL_VK.map.clmemFlags.4096.message)"></map>
 						<map value="0x100000" message="$(string.Intel_OCL_VK.map.clmemFlags.1048576.message)"></map>
 					</bitMap>
+					<bitMap name="clmapFlags">
+						<map value="0x1" message="$(string.Intel_OCL_VK.map.clmapFlags.1.message)"></map>
+						<map value="0x2" message="$(string.Intel_OCL_VK.map.clmapFlags.2.message)"></map>
+						<map value="0x4" message="$(string.Intel_OCL_VK.map.clmapFlags.4.message)"></map>
+					</bitMap>
 				</maps>
 				<templates>
 					<template tid="t_API_Sticker_OCL_Entry">
@@ -205,6 +214,16 @@
 						<data name="[Size]" inType="win:UInt32" outType="xs:unsignedInt" ></data>
 						<data name="[Host_ptr]" inType="win:UInt64" outType="win:HexInt64" ></data>
 						<data name="[Buffer Handle]" inType="win:UInt64" outType="win:HexInt64" ></data>
+						<data name="[Duration Time]" inType="win:Int64" outType="xs:long" ></data>
+					</template>
+
+					<template tid="t_API_OCL_EnqueueMapBuffer_Exit">
+						<data name="[CMD Queue]" inType="win:UInt64" outType="win:HexInt64" ></data>
+						<data name="[Buffer Handle]" inType="win:UInt64" outType="win:HexInt64" ></data>
+						<data name="[Block Map]" inType="win:Boolean" outType="xs:boolean" ></data>
+						<data name="[Flags]" inType="win:UInt32" map="clmapFlags" ></data>
+						<data name="[Offset]" inType="win:UInt32" outType="xs:unsignedInt" ></data>
+						<data name="[Copy_Bytes]" inType="win:UInt32" outType="xs:unsignedInt" ></data>
 						<data name="[Duration Time]" inType="win:Int64" outType="xs:long" ></data>
 					</template>
 
@@ -354,6 +373,10 @@
 				<string id="Intel_OCL_VK.map.clmemFlags.2048.message" value="SVM_ATOMICS"></string>
 				<string id="Intel_OCL_VK.map.clmemFlags.4096.message" value="KERNEL_READ_AND_WRITE"></string>
 				<string id="Intel_OCL_VK.map.clmemFlags.1048576.message" value="CL_MEM_FORCE_HOST_MEMORY_INTEL"></string>
+
+				<string id="Intel_OCL_VK.map.clmapFlags.1.message" value="READ"></string>
+				<string id="Intel_OCL_VK.map.clmapFlags.2.message" value="WRITE"></string>
+				<string id="Intel_OCL_VK.map.clmapFlags.4.message" value="WRITE_INVALIDATE_REGION"></string>
 
 
 			</stringTable>
