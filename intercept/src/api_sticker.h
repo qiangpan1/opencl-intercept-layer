@@ -47,6 +47,10 @@ typedef enum _OCL_TASK_ID {
     API_OCL_EnqueueWriteImage,
     API_OCL_EnqueueReadImage,
     API_OCL_ReleaseMemObject,
+    API_OCL_EnqueueCopyImage,
+    API_OCL_EnqueueCopyImageToBuffer,
+    API_OCL_EnqueueCopyBufferToImage,
+    API_OCL_EnqueueMapImage,
 } OCL_TASK_ID;
 
 typedef enum _OCL_EVENT_TYPE{
@@ -75,19 +79,6 @@ void MosTraceEvent(uint16_t usId,
     const void* pArg2,
     uint32_t dwSize2);
 
-typedef struct _MT_PARAM {
-    int32_t id;
-    int64_t value;
-} MT_PARAM;
-
-#define MT_LOG1(id, lvl, p1, v1)                                                                       \
-    {                                                                                                  \
-        int32_t _head[] = {id, lvl};                                                                   \
-        MT_PARAM _param[] = {p1, v1};                                                                  \
-        MosTraceEvent(119, 1, _head, sizeof(_head), _param, sizeof(_param)); \
-    }
-// ============================================================================================================================
-
 
 void trim(std::string& s);
 std::set<std::string> split(const std::string& s, char delimiter);
@@ -100,10 +91,6 @@ namespace APISticker{
     extern std::set<std::string> n_filter;
     void TraceEnter(const char* api, std::set<std::string>& p_filter, std::set<std::string>& n_filter);
 }// namespace APISticker
-#define API_STICKER_TRACE_ENTER() \
-    do{\
-        APISticker::TraceEnter(__func__,APISticker::p_filter,APISticker::n_filter);\
-    }while(0)
 
 namespace TraceKernel {
     struct Kernel_Param {
@@ -137,36 +124,29 @@ namespace TraceKernel {
         return std::make_tuple(result, duration);
     }
 
-}
-#define TRACE_KERNEL(kernel) \
+
+}// namespace TraceKernel
+
+#define API_STICKER_TRACE_ENTER() \
     do{\
-    const std::string kernel_name = pIntercept->getShortKernelName(kernel);\
-    if(TraceKernel::trace_filter.empty() ) { \
-        TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel));\
-    }else{\
-        if(TraceKernel::trace_filter.find("clEnqueueNDRangeKernel") != TraceKernel::trace_filter.end()){\
-            TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel));\
-        }\
-     }\
-}while(0)
-#define TRACE_TIMING(kernel)
+        APISticker::TraceEnter(__func__,APISticker::p_filter,APISticker::n_filter);\
+    }while(0)
+
+#define TRACE_ACTION_IF_FILTERED(action, filterName) \
+    do { \
+        if (TraceKernel::trace_filter.empty() || \
+            TraceKernel::trace_filter.find(filterName) != TraceKernel::trace_filter.end()) { \
+            action; \
+        } \
+    } while (0)
+
+#define TRACE_KERNEL(kernel) \
+     const std::string kernel_name = pIntercept->getShortKernelName(kernel); \
+     TRACE_ACTION_IF_FILTERED(TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel)), "clEnqueueNDRangeKernel"); \
+
+#define TRACE_CreateBuffer(...)\
+    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceCreateBuffer(__VA_ARGS__), "clCreateBuffer")
 
 
-//id could be api name 
-//lvl 
 
-// Usage example:
-// Note: the arg value in MT_LOG1 can reuse media event trace enum numbers.
-
-#endif
-
-// void main(int)
-// {
-//     MosTraceEventInit();
-//     // ivoke 1000 events
-//     for (auto i = 0; i < 1000; i++)
-//     {
-//         MT_LOG1(33555459, 1, 4097, 1000);
-//     }
-//     MosTraceEventClose();
-// }
+#endif//_ETW_TRACE_H
