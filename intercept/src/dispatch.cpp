@@ -981,14 +981,14 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
         HOST_PERFORMANCE_TIMING_START();
 
         cl_mem retVal;
-        std::chrono::microseconds duration;
-        std::tie(retVal, duration) = TraceKernel::TraceFuncTiming(pIntercept->dispatch().clCreateBuffer,
+        TRACE_CreateBuffer(
+            retVal,
+            pIntercept->dispatch().clCreateBuffer,
             context,
             flags,
             size,
             host_ptr,
             errcode_ret);
-        TraceKernel::TraceCreateBuffer(context, flags, size, host_ptr, retVal, duration);
 
         HOST_PERFORMANCE_TIMING_END();
         ADD_BUFFER( retVal );
@@ -997,8 +997,6 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
         CHECK_ERROR( errcode_ret[0] );
         ADD_OBJECT_ALLOCATION( retVal );
         CALL_LOGGING_EXIT( errcode_ret[0], "returned %p", retVal );
-
-        
 
         return retVal;
     }
@@ -1504,6 +1502,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainMemObject)(
             memobj );
         HOST_PERFORMANCE_TIMING_START();
 
+        TRACE_RetainMemObject();
         cl_int  retVal = pIntercept->dispatch().clRetainMemObject(
             memobj );
 
@@ -1541,6 +1540,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseMemObject)(
             memobj );
         HOST_PERFORMANCE_TIMING_START();
 
+        TRACE_ReleaseMemObject();
         cl_int  retVal = pIntercept->dispatch().clReleaseMemObject(
             memobj );
 
@@ -2708,6 +2708,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainKernel)(
             kernel );
         HOST_PERFORMANCE_TIMING_START();
 
+        TRACE_RetainKernel();
         cl_int  retVal = pIntercept->dispatch().clRetainKernel(
             kernel );
 
@@ -2745,6 +2746,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseKernel)(
         pIntercept->checkRemoveKernelInfo( kernel );
         HOST_PERFORMANCE_TIMING_START();
 
+        TRACE_ReleaseKernel();
         cl_int  retVal = pIntercept->dispatch().clReleaseKernel(
             kernel );
 
@@ -2794,6 +2796,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clSetKernelArg)(
         SET_KERNEL_ARG( kernel, arg_index, arg_size, arg_value );
         HOST_PERFORMANCE_TIMING_START();
 
+        TRACE_SetKernelArg();
         cl_int  retVal = pIntercept->dispatch().clSetKernelArg(
             kernel,
             arg_index,
@@ -3334,6 +3337,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueReadBuffer)(
             }
             else
             {
+                TRACE_ReadBuffer();
                 retVal = pIntercept->dispatch().clEnqueueReadBuffer(
                     command_queue,
                     buffer,
@@ -3743,7 +3747,6 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
     if( pIntercept && pIntercept->dispatch().clEnqueueCopyBuffer )
     {
         cl_int  retVal = CL_SUCCESS;
-        TraceKernel::TraceCopyBuffer(src_buffer, dst_buffer);
 
         INCREMENT_ENQUEUE_COUNTER();
         CHECK_AUBCAPTURE_START( command_queue );
@@ -3783,6 +3786,7 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueCopyBuffer)(
             }
             else
             {
+                TRACE_CopyBuffer(src_buffer, dst_buffer);
                 retVal = pIntercept->dispatch().clEnqueueCopyBuffer(
                     command_queue,
                     src_buffer,
@@ -4447,10 +4451,9 @@ CL_API_ENTRY void* CL_API_CALL CLIRN(clEnqueueMapBuffer)(
 
             ITT_ADD_PARAM_AS_METADATA( blocking_map );
 
-
-            //cl_mem retVal;
-            std::chrono::microseconds duration;
-            std::tie(retVal, duration) = TraceKernel::TraceFuncTiming(pIntercept->dispatch().clEnqueueMapBuffer,
+            TRACE_MapBuffer(
+                retVal,
+                pIntercept->dispatch().clEnqueueMapBuffer,
                 command_queue,
                 buffer,
                 blocking_map,
@@ -4461,16 +4464,6 @@ CL_API_ENTRY void* CL_API_CALL CLIRN(clEnqueueMapBuffer)(
                 event_wait_list,
                 event,
                 errcode_ret);
-
-            TRACE_MapBuffer(
-                command_queue,
-                buffer,
-                blocking_map,
-                map_flags,
-                offset,
-                cb,
-                duration
-            );
 
             HOST_PERFORMANCE_TIMING_END_WITH_TAG();
             DEVICE_PERFORMANCE_TIMING_END_WITH_TAG( command_queue, event );

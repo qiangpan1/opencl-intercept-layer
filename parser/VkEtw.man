@@ -18,7 +18,13 @@
 					<event symbol="API_OCL_CreateBuffer_Exit" value="542" version="0" task="API_OCL_CreateBuffer" opcode="win:Stop" template="t_API_OCL_CreateBuffer_Exit" ></event>
 
 					<event symbol="API_OCL_EnqueueMapBuffer_Exit" value="534" version="0" task="API_OCL_EnqueueMapBuffer" opcode="win:Stop" template="t_API_OCL_EnqueueMapBuffer_Exit"></event>
-					
+
+					<event symbol="API_OCL_EnqueueReadBuffer_Entry" value="545" version="0" task="API_OCL_EnqueueReadBuffer" opcode="win:Start"></event>
+					<event symbol="API_OCL_ReleaseMemObject_Entry" value="565" version="0" task="API_OCL_ReleaseMemObject" opcode="win:Start"></event>
+					<event symbol="API_OCL_ReleaseKernel_Entry" value="585" version="0" task="API_OCL_ReleaseKernel" opcode="win:Start"></event>
+					<event symbol="API_OCL_RetainKernel_Entry" value="589" version="0" task="API_OCL_RetainKernel" opcode="win:Start"></event>
+					<event symbol="API_OCL_RetainMemObject_Entry" value="593" version="0" task="API_OCL_RetainMemObject" opcode="win:Start"></event>
+					<event symbol="API_OCL_SetKernelArgEntry" value="597" version="0" task="API_OCL_SetKernelArg" opcode="win:Start"></event>
 					
 				</events>
 				<tasks>
@@ -35,7 +41,11 @@
 					<task name="API_OCL_EnqueueWriteImage" symbol="API_OCL_EnqueueWriteImage" value="139" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
 					<task name="API_OCL_EnqueueReadImage" symbol="API_OCL_EnqueueReadImage" value="140" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
 					<task name="API_OCL_ReleaseMemObject" symbol="API_OCL_ReleaseMemObject" value="141" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
-		
+					
+					<task name="API_OCL_ReleaseKernel" symbol="API_OCL_ReleaseKernel" value="146" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_RetainKernel" symbol="API_OCL_RetainKernel" value="147" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_RetainMemObject" symbol="API_OCL_RetainMemObject" value="148" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
+					<task name="API_OCL_SetKernelArg" symbol="API_OCL_SetKernelArg" value="149" eventGUID="{00000000-0000-0000-0000-000000000000}"></task>
 
 				</tasks>
 				<opcodes></opcodes>

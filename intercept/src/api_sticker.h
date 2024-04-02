@@ -51,6 +51,10 @@ typedef enum _OCL_TASK_ID {
     API_OCL_EnqueueCopyImageToBuffer,
     API_OCL_EnqueueCopyBufferToImage,
     API_OCL_EnqueueMapImage,
+    API_OCL_ReleaseKernel,
+    API_OCL_RetainKernel,
+    API_OCL_RetainMemObject,
+    API_OCL_SetKernelArg,
 } OCL_TASK_ID;
 
 typedef enum _OCL_EVENT_TYPE{
@@ -107,12 +111,15 @@ namespace TraceKernel {
     extern std::set<std::string> trace_filter;
     void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param>& obj);
     void TraceCopyBuffer(cl_mem bufferSrc, cl_mem bufferDst);
-    void TraceCreateBuffer(cl_context context,
+
+    void TraceCreateBuffer(
+        cl_context context,
         cl_mem_flags flags,
         size_t size,
         void* host_ptr,
+        cl_int* errcode_ret,
         cl_mem retVal,
-        std::chrono::microseconds &duration);
+        std::chrono::microseconds& duration);
 
     void TraceMapBuffer(
         cl_command_queue command_queue,
@@ -121,7 +128,11 @@ namespace TraceKernel {
         cl_map_flags map_flags,
         size_t offset,
         size_t cb,
-        std::chrono::microseconds& duration
+        cl_uint num_events_in_wait_list,
+        const cl_event* event_wait_list,
+        cl_event* event,
+        cl_int* errcode_ret,
+        std::chrono::microseconds &duration
     );
 
     template<typename Func, typename... Args>
@@ -132,9 +143,15 @@ namespace TraceKernel {
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
         return std::make_tuple(result, duration);
     }
-
-
+    void TraceReadBuffer();
+    void TraceCopyBuffer();
+    void TraceReleaseKernel();
+    void TraceReleaseMemObject();
+    void TraceRetainKernel();
+    void TraceRetainMemObject();
+    void TraceSetKernelArg();
 }// namespace TraceKernel
+
 
 #define API_STICKER_TRACE_ENTER() \
     do{\
@@ -153,11 +170,58 @@ namespace TraceKernel {
      const std::string kernel_name = pIntercept->getShortKernelName(kernel); \
      TRACE_ACTION_IF_FILTERED(TraceKernel::TraceNDRangeKernel(kernel, kernel_name, pIntercept->m_ArgsKernelInfoMap.at(kernel)), "clEnqueueNDRangeKernel"); \
 
-#define TRACE_CreateBuffer(...)\
-    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceCreateBuffer(__VA_ARGS__), "clCreateBuffer")
+#define TRACE_CreateBuffer(retVal,func,...)\
+    do {\
+            std::chrono::microseconds duration; \
+            std::tie(retVal, duration) = TraceKernel::TraceFuncTiming(func, __VA_ARGS__); \
+            TRACE_ACTION_IF_FILTERED(TraceKernel::TraceCreateBuffer(__VA_ARGS__, retVal,duration), "clCreateBuffer"); \
+    } while (0)
 
-#define TRACE_MapBuffer(...)\
-    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceMapBuffer(__VA_ARGS__), "clEnqueueMapBuffer")
+#define TRACE_MapBuffer(retVal,func,...)\
+    do { \
+        std::chrono::microseconds duration;\
+        std::tie(retVal, duration)=TraceKernel::TraceFuncTiming(func,__VA_ARGS__);\
+        TRACE_ACTION_IF_FILTERED(TraceKernel::TraceMapBuffer(__VA_ARGS__,duration), "clEnqueueMapBuffer");\
+    }while(0)
+    
+#define TRACE_ReadBuffer()\
+  do { \
+    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceReadBuffer(), "clEnqueueReadBuffer");\
+  }while(0)
+
+
+#define TRACE_CopyBuffer(src_buffer,dst_buffer)\
+  do { \
+    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceCopyBuffer(src_buffer, dst_buffer), "clEnqueueCopyBuffer");\
+  }while(0)
+
+#define TRACE_ReleaseKernel()\
+  do { \
+    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceReleaseKernel(), "clReleaseKernel");\
+  }while(0)
+
+#define TRACE_ReleaseMemObject()\
+  do { \
+    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceReleaseMemObject(), "clReleaseMemObject");\
+  }while(0)
+
+#define TRACE_RetainKernel()\
+  do { \
+    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceRetainKernel(), "clRetainKernel");\
+  }while(0)
+
+#define TRACE_RetainMemObject()\
+  do { \
+    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceRetainMemObject(), "clRetainMemObject");\
+  }while(0)
+
+#define TRACE_SetKernelArg()\
+  do { \
+    TRACE_ACTION_IF_FILTERED(TraceKernel::TraceSetKernelArg(), "clSetKernelArg");\
+  }while(0)
+
+
+
 
 
 

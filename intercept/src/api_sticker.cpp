@@ -171,10 +171,10 @@ std::set<std::string> split(const std::string& s, char delimiter) {
 namespace TraceKernel {
     const char* OCL_TRACE_FILTER;
     std::set<std::string>  trace_filter;
-    void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param> &obj ) {
+    void TraceNDRangeKernel(cl_kernel kernel_handle, std::string kernel_name, std::vector<TraceKernel::Kernel_Param>& obj) {
 
         uint64_t t_kernel_handle = reinterpret_cast<uint64_t>(kernel_handle);
-                 
+
         uint32_t params_count = obj.size();
         char debugstr[100];
         sprintf(debugstr, "This Kernel name is: %s Params Count: %d Kernel Handle: %" PRIx64, kernel_name.c_str(), params_count, t_kernel_handle);
@@ -190,8 +190,8 @@ namespace TraceKernel {
             MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, buffer.data(), count);
             return std::wstring(buffer.begin(), buffer.end() - 1); // Remove null terminator
             };
-       
-        std::wstring wideStr =utf8ToWide(kernel_name);
+
+        std::wstring wideStr = utf8ToWide(kernel_name);
         //const char* output_str = ansiStr.c_str();
 
         MosTraceEvent(
@@ -249,8 +249,12 @@ namespace TraceKernel {
         cl_map_flags map_flags,
         size_t offset,
         size_t cb,
+        cl_uint num_events_in_wait_list,
+        const cl_event* event_wait_list,
+        cl_event* event,
+        cl_int* errcode_ret,
         std::chrono::microseconds& duration
-        ) {
+    ) {
 
         struct MapBuffer {
             uint64_t command_queue;
@@ -260,7 +264,7 @@ namespace TraceKernel {
             uint32_t offsize;
             uint32_t cb;
             int64_t duration_time;
-        } t_end{ (uint64_t)command_queue,(uint64_t)buffer,(bool)blocking_map,(uint32_t)map_flags,(uint32_t)offset,(uint32_t)cb, (int64_t)duration.count()};
+        } t_end{ (uint64_t)command_queue,(uint64_t)buffer,(bool)blocking_map,(uint32_t)map_flags,(uint32_t)offset,(uint32_t)cb, (int64_t)duration.count() };
 
         MosTraceEvent(
             API_OCL_EnqueueMapBuffer,
@@ -270,13 +274,15 @@ namespace TraceKernel {
             nullptr,
             0);
     }
+
     void TraceCreateBuffer(
         cl_context context,
         cl_mem_flags flags,
         size_t size,
         void* host_ptr,
+        cl_int* errcode_ret,
         cl_mem retVal,
-        std::chrono::microseconds &duration) {
+        std::chrono::microseconds& duration) {
 
         struct CreateBuffer {
             uint64_t context;
@@ -285,13 +291,76 @@ namespace TraceKernel {
             uint64_t host_ptr;
             uint64_t retVal;
             int64_t duration_time;
-        } t_end{(uint64_t)context,(uint32_t)flags,(uint32_t)size,(uint64_t)host_ptr,(uint64_t)retVal, (int64_t)duration.count() };
+        } t_end{ (uint64_t)context,(uint32_t)flags,(uint32_t)size,(uint64_t)host_ptr,(uint64_t)retVal, (int64_t)duration.count() };
 
         MosTraceEvent(
             API_OCL_CreateBuffer,
             EVENT_TYPE_END,
             &t_end,
             sizeof(t_end),
+            nullptr,
+            0);
+    }
+    void TraceReadBuffer() {
+        MosTraceEvent(
+            API_OCL_EnqueueReadBuffer,
+            EVENT_TYPE_START,
+            nullptr,
+            0,
+            nullptr,
+            0);
+    }
+    void TraceCopyBuffer() {
+        MosTraceEvent(
+            API_OCL_EnqueueCopyBuffer,
+            EVENT_TYPE_START,
+            nullptr,
+            0,
+            nullptr,
+            0);
+    }
+    void TraceReleaseKernel() {
+        MosTraceEvent(
+            API_OCL_ReleaseKernel,
+            EVENT_TYPE_START,
+            nullptr,
+            0,
+            nullptr,
+            0);
+    }
+    void TraceReleaseMemObject() {
+        MosTraceEvent(
+            API_OCL_ReleaseMemObject,
+            EVENT_TYPE_START,
+            nullptr,
+            0,
+            nullptr,
+            0);
+    }
+    void TraceRetainKernel() {
+        MosTraceEvent(
+            API_OCL_RetainKernel,
+            EVENT_TYPE_START,
+            nullptr,
+            0,
+            nullptr,
+            0);
+    }
+    void TraceRetainMemObject() {
+        MosTraceEvent(
+            API_OCL_RetainMemObject,
+            EVENT_TYPE_START,
+            nullptr,
+            0,
+            nullptr,
+            0);
+    }
+    void TraceSetKernelArg() {
+        MosTraceEvent(
+            API_OCL_SetKernelArg,
+            EVENT_TYPE_START,
+            nullptr,
+            0,
             nullptr,
             0);
     }
