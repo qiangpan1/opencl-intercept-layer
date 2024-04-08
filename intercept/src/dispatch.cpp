@@ -1490,6 +1490,9 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainMemObject)(
 {
     API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
+    if (pIntercept->config().SKIP4CALL) {
+        return 0;
+    }
     if( pIntercept && pIntercept->dispatch().clRetainMemObject )
     {
         GET_ENQUEUE_COUNTER();
@@ -1527,6 +1530,9 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseMemObject)(
 {
     API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
+    if (pIntercept->config().SKIP4CALL) {
+        return 0;
+    }
     if( pIntercept && pIntercept->dispatch().clReleaseMemObject )
     {
         GET_ENQUEUE_COUNTER();
@@ -2696,6 +2702,10 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clRetainKernel)(
 {
     API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
+
+    if (pIntercept->config().SKIP4CALL) {
+        return 0;
+    }
     if( pIntercept && pIntercept->dispatch().clRetainKernel )
     {
         GET_ENQUEUE_COUNTER();
@@ -2733,6 +2743,9 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clReleaseKernel)(
 {
     API_STICKER_TRACE_ENTER();CLIntercept*    pIntercept = GetIntercept();
 
+    if (pIntercept->config().SKIP4CALL) {
+        return 0;
+    }
     if( pIntercept && pIntercept->dispatch().clReleaseKernel )
     {
         GET_ENQUEUE_COUNTER();
