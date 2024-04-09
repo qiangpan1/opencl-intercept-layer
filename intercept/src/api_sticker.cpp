@@ -176,9 +176,9 @@ namespace TraceKernel {
         uint64_t t_kernel_handle = reinterpret_cast<uint64_t>(kernel_handle);
 
         uint32_t params_count = obj.size();
-        char debugstr[100];
+        /*char debugstr[100];
         sprintf(debugstr, "This Kernel name is: %s Params Count: %d Kernel Handle: %" PRIx64, kernel_name.c_str(), params_count, t_kernel_handle);
-        OutputDebugString(debugstr);
+        OutputDebugString(debugstr);*/
 
         // UTF-8 to Wide
         auto utf8ToWide = [](const std::string& str) -> std::wstring {
@@ -505,9 +505,9 @@ const std::map<std::string, uint32_t> APIMap={
         try
         {
             uint32_t data = APIMap.at(api);
-            char output[100];
+            /*char output[100];
             sprintf_s(output,"%s---->%d",api,data);
-            OutputDebugString(output);
+            OutputDebugString(output);*/
             
             if (!p_filter.empty()) {
                 std::string t_entry(api);
@@ -546,9 +546,9 @@ const std::map<std::string, uint32_t> APIMap={
         }
         catch (...)
         {
-            char failure[100];
+            /*char failure[100];
             sprintf(failure, "try catch failued->>>>%s", api);
-            OutputDebugString("try catch failued");
+            OutputDebugString("try catch failued");*/
             return;
         }
     }
