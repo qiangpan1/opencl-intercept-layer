@@ -4763,19 +4763,31 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
 {
     CLIntercept*    pIntercept = GetIntercept();
 
+    char kernel_name[1024];
     if( pIntercept && pIntercept->dispatch().clEnqueueNDRangeKernel )
     {
         cl_int  retVal = CL_SUCCESS;
 
         INCREMENT_ENQUEUE_COUNTER();
+
+        pIntercept->dispatch().clGetKernelInfo(kernel,
+            CL_KERNEL_FUNCTION_NAME,
+            sizeof(kernel_name),
+            kernel_name,
+            nullptr);
+
         CHECK_CAPTURE_REPLAY_START_KERNEL(
             kernel,
             work_dim,
             global_work_offset,
             global_work_size,
             local_work_size );
-        DUMP_BUFFERS_BEFORE_ENQUEUE( kernel, command_queue );
-        DUMP_IMAGES_BEFORE_ENQUEUE( kernel, command_queue );
+
+        if (pIntercept->config().SelectedKernel == std::string(kernel_name)) {
+            DUMP_BUFFERS_BEFORE_ENQUEUE(kernel, command_queue);
+            DUMP_IMAGES_BEFORE_ENQUEUE(kernel, command_queue);
+        }
+
         CHECK_AUBCAPTURE_START_KERNEL(
             kernel,
             work_dim,
@@ -4880,9 +4892,13 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             CALL_LOGGING_EXIT_EVENT_WITH_TAG( retVal, event );
             ADD_EVENT( event ? event[0] : NULL );
         }
-
-        DUMP_BUFFERS_AFTER_ENQUEUE( kernel, command_queue );
-        DUMP_IMAGES_AFTER_ENQUEUE( kernel, command_queue );
+        
+        if (pIntercept->config().SelectedKernel == std::string(kernel_name))
+        {
+            DUMP_BUFFERS_AFTER_ENQUEUE(kernel, command_queue);
+            DUMP_IMAGES_AFTER_ENQUEUE(kernel, command_queue);
+        }
+    
         FINISH_OR_FLUSH_AFTER_ENQUEUE( command_queue );
         CHECK_AUBCAPTURE_STOP( command_queue );
 
