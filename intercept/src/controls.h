@@ -223,5 +223,7 @@ CLI_CONTROL( bool,          OverrideWriteImage,                     false, "If s
 CLI_CONTROL( bool,          OverrideCopyImage,                      false, "If set to a nonzero value, the Intercept Layer for OpenCL Applications will use a kernel to implement clEnqueueCopyImage() instead of the implementation's clEnqueueCopyImage().  Only 2D images are currently supported." )
 CLI_CONTROL( bool,          OverrideBuiltinKernels,                 false, "If set to a nonzero value, the Intercept Layer for OpenCL Applications will use its own version of the built-in OpenCL kernels that may be accessed via clCreateProgramWithBuiltInKernels(). At present, only the VME block_motion_estimate_intel kernel is implemented." )
 
-CLI_CONTROL_SEPARATOR(Debug Dainvic REd : )
+CLI_CONTROL_SEPARATOR(Debug Adobe trans8k->4k : )
 CLI_CONTROL(std::string, SelectedKernel, "", "selected")
+CLI_CONTROL(bool, SelectedKernelDump, false, ".")
+

@@ -4783,7 +4783,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             global_work_size,
             local_work_size );
 
-        if (pIntercept->config().SelectedKernel == std::string(kernel_name)) {
+        if (pIntercept->config().SelectedKernel == std::string(kernel_name)
+            && pIntercept->config().SelectedKernelDump) {
             DUMP_BUFFERS_BEFORE_ENQUEUE(kernel, command_queue);
             DUMP_IMAGES_BEFORE_ENQUEUE(kernel, command_queue);
         }
@@ -4801,11 +4802,13 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             {
                 local_work_size = NULL;
             }
-            pIntercept->overrideNullLocalWorkSize(
-                work_dim,
-                global_work_size,
-                local_work_size );
-
+            if (pIntercept->config().SelectedKernel == std::string(kernel_name)) {
+                pIntercept->overrideNullLocalWorkSize(
+                    work_dim,
+                    global_work_size,
+                    local_work_size);
+            }
+           
             std::string argsString;
             if( pIntercept->config().CallLogging )
             {
@@ -4893,7 +4896,8 @@ CL_API_ENTRY cl_int CL_API_CALL CLIRN(clEnqueueNDRangeKernel)(
             ADD_EVENT( event ? event[0] : NULL );
         }
         
-        if (pIntercept->config().SelectedKernel == std::string(kernel_name))
+        if (pIntercept->config().SelectedKernel == std::string(kernel_name)
+            && pIntercept->config().SelectedKernelDump)
         {
             DUMP_BUFFERS_AFTER_ENQUEUE(kernel, command_queue);
             DUMP_IMAGES_AFTER_ENQUEUE(kernel, command_queue);
