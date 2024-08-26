@@ -226,4 +226,5 @@ CLI_CONTROL( bool,          OverrideBuiltinKernels,                 false, "If s
 CLI_CONTROL_SEPARATOR(Debug Adobe trans8k->4k : )
 CLI_CONTROL(std::string, SelectedKernel, "", "selected")
 CLI_CONTROL(bool, SelectedKernelDump, false, ".")
+CLI_CONTROL(cl_uint, BufferSizeForceFlagRemoval, 0, "")
 

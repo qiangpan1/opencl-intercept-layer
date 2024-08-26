@@ -973,6 +973,12 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
         CHECK_ERROR_INIT( errcode_ret );
         HOST_PERFORMANCE_TIMING_START();
 
+        if (pIntercept->config().BufferSizeForceFlagRemoval > 0 &&
+            pIntercept->config().BufferSizeForceFlagRemoval == size) {
+            cl_mem_flags mask= ~(1 << 20);
+            flags = flags & mask;
+        }
+
         cl_mem  retVal = pIntercept->dispatch().clCreateBuffer(
             context,
             flags,
