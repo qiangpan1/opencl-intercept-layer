@@ -978,6 +978,10 @@ CL_API_ENTRY cl_mem CL_API_CALL CLIRN(clCreateBuffer)(
             cl_mem_flags mask= ~(1 << 20);
             flags = flags & mask;
         }
+        if (pIntercept->config().BufferSizeForceFlagRemovalAll ) {
+            cl_mem_flags mask = ~(1 << 20);
+            flags = flags & mask;
+        }
 
         cl_mem  retVal = pIntercept->dispatch().clCreateBuffer(
             context,
